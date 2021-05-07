@@ -1,6 +1,8 @@
 <template>
     <el-container>
-        <el-aside :class="[store.state.sideStatus?'':'side']"></el-aside>
+        <el-aside :class="[store.state.sideStatus?'':'side']">
+            <Aside></Aside>
+        </el-aside>
         <el-container>
             <el-header>
                 <Header></Header>
@@ -16,6 +18,7 @@
 <script setup>
     import {useStore} from 'vuex'
     import Header from '@/views/layout/header/header.vue'
+    import Aside from '@/views/layout/aside/aside.vue'
     const store = useStore()
 
 </script>
@@ -32,6 +35,8 @@ export default {
 }
 .el-aside{
     height:100%;
+    border-right: 1px solid #eee;
+    box-shadow: 1px 2px 5px rgb(0 0 0 / 10%);
     transition: all 2s ease 0s;
 }
 .side{
@@ -44,6 +49,8 @@ export default {
 }
 .el-main{
     height:100%;
+    padding:0px!important;
+    background-color:#eee;
 }
 .el-footer{
     height:100%;

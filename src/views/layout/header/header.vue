@@ -10,15 +10,16 @@
 </template>
 
 <script setup>
+    import {watchEffect} from 'vue'
     import {useStore} from 'vuex'
     import {useRoute} from 'vue-router'
     import Menu from '@/components/element/menu/index.vue'
     const store = useStore()
     const route = useRoute()
-    const menu = [{'title':'首页','path':'/home','icon':'home'},
-    {'title':'分类','path':'/category','icon':'home'},
-    {'title':'归档','path':'/file','icon':'home'},
-    {'title':'我的','path':'/profile',children:[{'title':'测试','path':'/test'}]}]
+    const menu = [{'title':'首页','path':'/home','icon':'s-home'},
+    {'title':'分类','path':'/category','icon':'collection-tag'},
+    {'title':'归档','path':'/file','icon':'files'},
+    {'title':'我的','path':'/profile','icon':'user',children:[{'title':'测试','path':'/test','icon':'user'}]}]
     const active = route.fullPath
 
     const collapse = ()=>{

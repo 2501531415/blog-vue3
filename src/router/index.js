@@ -18,7 +18,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to,form,next)=>{
-    console.log(to)
     if(to.meta.name){
         document.title = to.meta.name
     }else{

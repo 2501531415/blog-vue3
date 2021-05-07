@@ -1,4 +1,4 @@
-import {ElButton,ElContainer,ElAside,ElMain,ElHeader,ElFooter,ElIcon,ElMenu,ElMenuItem,ElSubmenu} from 'element-plus'
+import {ElButton,ElContainer,ElAside,ElMain,ElHeader,ElFooter,ElIcon,ElMenu,ElMenuItem,ElSubmenu,ElScrollbar,ElRow,ElCol,ElTag} from 'element-plus'
 
 const components = [
     ElButton,
@@ -10,7 +10,11 @@ const components = [
     ElIcon,
     ElMenu,
     ElMenuItem,
-    ElSubmenu
+    ElSubmenu,
+    ElScrollbar,
+    ElRow,
+    ElCol,
+    ElTag
 ]
 
 export default (app)=>{

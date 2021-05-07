@@ -3,16 +3,16 @@
         <template v-for="(item,index) in menu" :key="index">
             <el-submenu :index="item.path" v-if="item.children">
                 <template #title>
-                    <i :class="`el-icon-s-${item.icon}`"></i>
+                    <i :class="`el-icon-${item.icon}`"></i>
                     <span>{{item.title}}</span>
                 </template>
                 <el-menu-item v-for="(child,indey) in item.children" :key="indey" :route="child.path" :index="child.path">
-                    <i :class="`el-icon-s-${item.icon}`"></i>
+                    <i :class="`el-icon-${child.icon}`"></i>
                     <template #title>{{child.title}}</template>
                 </el-menu-item>
             </el-submenu>
             <el-menu-item v-else :index="item.path">
-                <i :class="`el-icon-s-${item.icon}`"></i>
+                <i :class="`el-icon-${item.icon}`"></i>
                 <template #title>{{item.title}}</template>
             </el-menu-item>
         </template>
