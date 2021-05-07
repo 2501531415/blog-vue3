@@ -1,6 +1,6 @@
 const mutations = {
-    changeTest:(state,payload)=>{
-        state.test = payload
+    changeSideStatus:(state,payload)=>{
+        state.sideStatus = payload
     }
 }
 

@@ -1,6 +1,6 @@
 const getters = {
-    getTest:(state)=>{
-        return state.test
+    getSideStatus:(state)=>{
+        return state.sideStatus
     }
 }
 

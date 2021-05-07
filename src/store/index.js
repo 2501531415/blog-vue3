@@ -6,7 +6,7 @@ import actions from './actions'
 const store = createStore({
     state(){
         return {
-            test:1
+            sideStatus:true
         }
     },
     getters,
