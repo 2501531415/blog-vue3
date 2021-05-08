@@ -12,6 +12,7 @@
                         </div>
                     </el-col>
                 </el-row>
+                <div>{{a}}</div>
             </div>
             <m-acticle :acticle="data" @readAll="readAll"></m-acticle>
         </el-scrollbar>
@@ -22,7 +23,9 @@
     import MActicle from '@/components/common/mActicle/index.vue'
     import marked from 'marked'
     import {useRouter} from 'vue-router'
+    import {ref} from 'vue'
     const router = useRouter()
+    const a = ref(8)
 const data = [{
     "meta": {
         "views": 1,
@@ -43,10 +46,11 @@ const data = [{
     "update_time": "2020-03-03T07:18:12.850Z",
     "__v": 0
 }]
-
+// const test = ref(0222)
 
 const readAll = (data)=>{
-    router.push({path:`/detail/${data.type}`,query:{'id':data.id}})
+    //router.push({path:`/detail/${data.type}`,query:{'id':data.id}})
+    a.value = 888
 }
 </script>
 
