@@ -6,10 +6,12 @@
 
 <script setup>
     import {useRouter} from 'vue-router'
+
     const router = useRouter()
     const enter = ()=>{
         router.push('/page')
     }
+
 </script>
 
 <style lang="less" scoped>

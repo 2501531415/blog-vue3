@@ -13,9 +13,10 @@
                         <div class="m-acticle-desc">
                             <span>{{item.desc}}</span>
                         </div>
+                        <el-button type="primary" @click="readAll">点击</el-button>
                     </div>
                     <div class="m-acticle-tag">
-                        <el-tag>标签一</el-tag>
+                        <el-tag v-for="item in 3" :key="item" size="small" :color="tagColor[item]">标签一</el-tag>
                     </div>
                 </div>
             </el-col>
@@ -25,13 +26,19 @@
 
 <script setup>
     import {defineProps,defineEmit} from 'vue'
-
+    import {tagColor} from '@/config/config.js'
     const props = defineProps({
         acticle:{
             type:Array,
             default:[]
         }
     })
+
+    const emit = defineEmit(['readAll'])
+
+    const readAll = ()=>{
+        emit('readAll',{'type':'acticle','id':1})
+    }
 </script>
 
 <style lang="less" scoped>
@@ -44,6 +51,7 @@
     .m-acticle-item{
         background-color:#fff;
         border-radius: 5px;
+        box-shadow: 0 1px 2px rgb(151 151 151 / 58%);
         .m-acticle-content{
             padding:15px;
             .m-acticle-time{
@@ -51,7 +59,7 @@
             }
             .m-acticle-title{
                 font-size: 20px;
-                color: blue;
+                color: #3f51b5;
                 margin: 15px 0px;
             }
         }

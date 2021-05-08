@@ -12,99 +12,46 @@
                         </div>
                     </el-col>
                 </el-row>
+                <div>{{a}}</div>
             </div>
-            <m-acticle :acticle="data"></m-acticle>
+            <m-acticle :acticle="data" @readAll="readAll"></m-acticle>
         </el-scrollbar>
     </div>
 </template>
 
 <script setup>
     import MActicle from '@/components/common/mActicle/index.vue'
-    const data = [{
+    import marked from 'marked'
+    import {useRouter} from 'vue-router'
+    import {ref} from 'vue'
+    const router = useRouter()
+    const a = ref(8)
+const data = [{
     "meta": {
         "views": 1,
-        "likes": 1,
-        "comments": 2
+        "likes": 0,
+        "comments": 0
     },
-    "number": "210",
-    "type": "技术",
-    "img_url": "/upload/picture/1583033684(1).png",
-    "avatar": "/upload/picture/avatar.png",
+    "desc": "修改路由push方法,阻止重复点击报错",
+    "number": "429",
+    "type": "vue",
     "status": "0",
-    "hotTop": 0,
-    "origin": "原创",
-    "create_time": "2020-02-26T14:13:07.262Z",
-    "_id": "5e5b37879fb04a5782776433",
-    "author": "0",
-    "content": "# Vue 的响应式原理\n在生成vue实例时，为对传入的data进行遍历，使用Object.defineProperty把这些属性转为getter/setter.\n\nObject.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。\n\n每个vue实例都有一个watcher实例，它会在实例渲染时记录这些属性，并在setter触发时重新渲染。",
-    "title": "Vue的响应式原理",
-    "desc": "vue响应式原理",
-    "update_time": "2020-03-01T04:18:15.017Z",
-    "__v": 0
-},{
-    "meta": {
-        "views": 1,
-        "likes": 1,
-        "comments": 2
-    },
-    "number": "210",
-    "type": "技术",
-    "img_url": "/upload/picture/1583033684(1).png",
-    "avatar": "/upload/picture/avatar.png",
-    "status": "0",
-    "hotTop": 0,
-    "origin": "原创",
-    "create_time": "2020-02-26T14:13:07.262Z",
-    "_id": "5e5b37879fb04a5782776433",
-    "author": "0",
-    "content": "# Vue 的响应式原理\n在生成vue实例时，为对传入的data进行遍历，使用Object.defineProperty把这些属性转为getter/setter.\n\nObject.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。\n\n每个vue实例都有一个watcher实例，它会在实例渲染时记录这些属性，并在setter触发时重新渲染。",
-    "title": "Vue的响应式原理",
-    "desc": "vue响应式原理",
-    "update_time": "2020-03-01T04:18:15.017Z",
-    "__v": 0
-},{
-    "meta": {
-        "views": 1,
-        "likes": 1,
-        "comments": 2
-    },
-    "number": "210",
-    "type": "技术",
-    "img_url": "/upload/picture/1583033684(1).png",
-    "avatar": "/upload/picture/avatar.png",
-    "status": "0",
-    "hotTop": 0,
-    "origin": "原创",
-    "create_time": "2020-02-26T14:13:07.262Z",
-    "_id": "5e5b37879fb04a5782776433",
-    "author": "0",
-    "content": "# Vue 的响应式原理\n在生成vue实例时，为对传入的data进行遍历，使用Object.defineProperty把这些属性转为getter/setter.\n\nObject.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。\n\n每个vue实例都有一个watcher实例，它会在实例渲染时记录这些属性，并在setter触发时重新渲染。",
-    "title": "Vue的响应式原理",
-    "desc": "vue响应式原理",
-    "update_time": "2020-03-01T04:18:15.017Z",
-    "__v": 0
-},{
-    "meta": {
-        "views": 1,
-        "likes": 1,
-        "comments": 2
-    },
-    "number": "210",
-    "type": "技术",
-    "img_url": "/upload/picture/1583033684(1).png",
-    "avatar": "/upload/picture/avatar.png",
-    "status": "0",
-    "hotTop": 0,
-    "origin": "原创",
-    "create_time": "2020-02-26T14:13:07.262Z",
-    "_id": "5e5b37879fb04a5782776433",
-    "author": "0",
-    "content": "# Vue 的响应式原理\n在生成vue实例时，为对传入的data进行遍历，使用Object.defineProperty把这些属性转为getter/setter.\n\nObject.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。\n\n每个vue实例都有一个watcher实例，它会在实例渲染时记录这些属性，并在setter触发时重新渲染。",
-    "title": "Vue的响应式原理",
-    "desc": "vue响应式原理",
-    "update_time": "2020-03-01T04:18:15.017Z",
+    "_id": "5e5e04b422d98f477d26447a",
+    "title": "vue-router中的push问题",
+    "keyWord": "vue-router",
+    "content": "## 前言\n> vue-router中的push问题\n```\n// 修改路由push方法,阻止重复点击报错\nconst originalPush = VueRouter.prototype.push;\nVueRouter.prototype.push = function push(location) {\n  return originalPush.call(this, location).catch(err => err);\n};\n\n// 修改路由replace方法,阻止重复点击报错\nconst originalReplace = VueRouter.prototype.replace;\nVueRouter.prototype.replace = function replace(location) {\n  return originalReplace.call(this, location).catch(err => err);\n};\n```",
+    "author": "ming",
+    "img_url": "/upload/picture/timg.jpg",
+    "create_time": "2020-03-03T07:18:12.850Z",
+    "update_time": "2020-03-03T07:18:12.850Z",
     "__v": 0
 }]
+// const test = ref(0222)
+
+const readAll = (data)=>{
+    //router.push({path:`/detail/${data.type}`,query:{'id':data.id}})
+    a.value = 888
+}
 </script>
 
 <style lang="less" scoped>
