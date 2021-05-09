@@ -4,7 +4,7 @@
             <i :class="[store.state.sideStatus?'el-icon-s-fold':'el-icon-s-unfold']" @click="collapse"></i>
         </div>
         <div class="header-right">
-            <Menu :menu="menu" mode="horizontal" :router="true" :default-active="active"></Menu>
+            <Menu :menu="menu" mode="horizontal" :router="true" :default-active="active" background-color="#3f51b5" text-color="#fff"></Menu>
         </div>
     </div>
 </template>

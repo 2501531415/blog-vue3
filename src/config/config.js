@@ -3,7 +3,7 @@ const httpConfig = {
     timeout:5000   
 }
 
-const tagColor = ['red','blue','yellow','green']
+const tagColor = ['#409eff','#67c23a','#e6a23c','#f56c6c']
 
 export {
     httpConfig,tagColor

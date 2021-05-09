@@ -7,16 +7,13 @@
             <el-header>
                 <Header></Header>
             </el-header>
-            <el-main>
-                <router-view v-slot="{ Component }">
-                    <transition>
-                        <keep-alive>
-                        <component :is="Component" />
-                        </keep-alive>
-                    </transition>
-                </router-view>
-            </el-main>
-            <el-footer></el-footer>
+            <el-scrollbar>
+                <el-main>
+                    <Main/>
+                    <Footer/>
+                </el-main>
+             </el-scrollbar>
+             <el-backtop target=".el-scrollbar__wrap"  :bottom="bottom"></el-backtop>
         </el-container>
     </el-container>
 </template>
@@ -25,8 +22,10 @@
     import {useStore} from 'vuex'
     import Header from '@/views/layout/header/header.vue'
     import Aside from '@/views/layout/aside/aside.vue'
+    import Footer from '@/views/layout/footer/footer.vue'
+    import Main from '@/views/layout/main/main.vue'
     const store = useStore()
-
+    const bottom = 65
 </script>
 
 <script>
@@ -49,15 +48,12 @@ export default {
 }
 .el-header{
     height:100%;
-    //background-color: #2f589c;
+    background-color: #3f51b5;
     border-bottom: 1px solid #eee;
 }
 .el-main{
     height:100%;
     padding:0!important;
     background-color:#eee ;
-}
-.el-footer{
-    height:100%;
 }
 </style>

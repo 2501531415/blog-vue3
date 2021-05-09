@@ -5,6 +5,8 @@ import store from './store'
 import element from './lib/element-plus'
 import highlight from './lib/highlight'
 import '@/assets/less/global.less'
+
+//import '@/assets/less/markdown.less'
 import 'highlight.js/styles/atom-one-light.css' //highlight样式文件
 
 const app = createApp(App)
