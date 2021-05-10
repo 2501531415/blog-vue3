@@ -1,18 +1,20 @@
 <template>
-    <m-title>
-        <template #other>
-            <div class="category-nav">
-                <div class="category-nav-item" :class="[currentIndex == 0?'active':'']" @click="change('all',0)">
-                    <span>全部</span>
-                </div>
-                <div class="category-nav-item" v-for="(item,index) in state.categoryData" :key="index" :class="[currentIndex == index + 1?'active':'']" @click="change(item.type,index+1)">
-                    <span>{{item.type}}</span>
-                </div>
-            </div>
-        </template>
-    </m-title>
     <div class="category">
-        <m-post :post="state.postData" @readAll="readAll"></m-post>
+        <m-title v-if="state.categoryData">
+            <template #other>
+                <div class="category-nav">
+                    <div class="category-nav-item" :class="[currentIndex == 0?'active':'']" @click="change('all',0)">
+                        <span>全部</span>
+                    </div>
+                    <div class="category-nav-item" v-for="(item,index) in state.categoryData" :key="index" :class="[currentIndex == index + 1?'active':'']" @click="change(item.type,index+1)">
+                        <span>{{item.type}}</span>
+                    </div>
+                </div>
+            </template>
+        </m-title>
+        <div class="category-list">
+            <m-post :post="state.postData" @readAll="readAll"></m-post>
+        </div>
     </div>
 </template>
 

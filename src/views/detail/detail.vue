@@ -1,57 +1,59 @@
 <template>
-    <m-title></m-title>
     <div class="detail">
-        <el-row>
-            <el-col :span='12' :offset='6'>
-                <div class="detail-content" v-if="state.detailData">
-                    <div class="detail-message">
-                        <div>
-                            <span>作者：</span>
-                            <span>{{state.detailData.author}}</span>
-                        </div>
-                        <div>
-                            <i class="el-icon-view"></i>
-                            <span>{{state.detailData.meta.views}}</span>
-                        </div>
-                        <div>
-                             <i class="el-icon-star-on"></i>
-                            <span>{{state.detailData.meta.likes}}</span>
-                        </div>
-                        <div>
-                            <i class="el-icon-document"></i>
-                            <span>{{state.detailData.meta.comments}}</span>
-                        </div>
-                        <div>
-                            <span>字数：</span>
-                            <span>{{state.detailData.number}}</span>
-                        </div>
-                        <div class="detail-time">
-                            <span>创建时间：</span>
-                            <span>{{utcFormat(state.detailData.create_time)}}</span>
-                        </div>
-                    </div>
-                   <div class="detail-content-word">
-                        <div class="detail-title">
-                            <span>{{state.detailData.title}}</span>
-                        </div>
-                        <div class="detail-word" v-html="state.detailData.content" v-highlight></div>
-                        <div class="detail-bottom-message">
-                            <div class="bottom-message-time">
-                                <span>最后更新时间：</span>
-                                <span>{{utcFormat(state.detailData.update_time)}}</span>
+        <m-title></m-title>
+        <div class="detail-container">
+            <el-row>
+                <el-col :span='12' :offset='6'>
+                    <div class="detail-content" v-if="state.detailData">
+                        <div class="detail-message">
+                            <div>
+                                <span>作者：</span>
+                                <span>{{state.detailData.author}}</span>
                             </div>
-                            <div class="bottom-message-url">
-                                <span>外部链接：</span>
-                                <span>暂无</span>
+                            <div>
+                                <i class="el-icon-view"></i>
+                                <span>{{state.detailData.meta.views}}</span>
+                            </div>
+                            <div>
+                                 <i class="el-icon-star-on"></i>
+                                <span>{{state.detailData.meta.likes}}</span>
+                            </div>
+                            <div>
+                                <i class="el-icon-document"></i>
+                                <span>{{state.detailData.meta.comments}}</span>
+                            </div>
+                            <div>
+                                <span>字数：</span>
+                                <span>{{state.detailData.number}}</span>
+                            </div>
+                            <div class="detail-time">
+                                <span>创建时间：</span>
+                                <span>{{utcFormat(state.detailData.create_time)}}</span>
                             </div>
                         </div>
+                       <div class="detail-content-word">
+                            <div class="detail-title">
+                                <span>{{state.detailData.title}}</span>
+                            </div>
+                            <div class="detail-word" v-html="state.detailData.content" v-highlight></div>
+                            <div class="detail-bottom-message">
+                                <div class="bottom-message-time">
+                                    <span>最后更新时间：</span>
+                                    <span>{{utcFormat(state.detailData.update_time)}}</span>
+                                </div>
+                                <div class="bottom-message-url">
+                                    <span>外部链接：</span>
+                                    <span>暂无</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-tag">
+                             <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
+                        </div>
                     </div>
-                    <div class="detail-tag">
-                         <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
-                    </div>
-                </div>
-            </el-col>
-        </el-row>
+                </el-col>
+            </el-row>
+        </div>
     </div>
 </template>
 
@@ -85,7 +87,7 @@
 
 <style lang="less">
 @import '@/assets/less/markdown.less';
-.detail{
+.detail-container{
     //background-color:red;
     width:100%;
     transform: translate(0px,-80px);
