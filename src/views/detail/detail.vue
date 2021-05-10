@@ -51,6 +51,15 @@
                              <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
                         </div>
                     </div>
+                    <div class="detail-comment">
+                        <m-comment></m-comment>
+                        <div class="detail-comment-tip">
+                            <span>Code1:Don't post illegal comments</span>
+                        </div>
+                        <div class="detail-comment-from">
+                            <span>Powered By wmyy</span>
+                        </div>
+                    </div>
                 </el-col>
             </el-row>
         </div>
@@ -65,6 +74,7 @@
     import {utcFormat} from '@/utils/time.js'
     import TagGroup from '@/components/element/tagGroup/index.vue'
     import MTitle from '@/components/common/mTitle/index.vue'
+    import MComment from '@/components/common/MComment/index.vue'
     const route = useRoute()
 
     const state = reactive({
@@ -137,6 +147,24 @@
             padding: 10px 30px;
             border-top: 1px solid #eee;
             min-height: 32px;
+        }
+    }
+    .detail-comment{
+        .detail-content();
+        margin-top:50px;
+        padding:30px;
+        .detail-comment-tip{
+            margin: 30px 10px;
+            border-radius: 4px;
+            padding: 10px;
+            background-color: #f6f6f6;
+            opacity: 0.7;
+        }
+        .detail-comment-from{
+            display: flex;
+            justify-content: flex-end;
+            font-size: 14px;
+            color: gray;
         }
     }
 }
