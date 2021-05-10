@@ -27,3 +27,17 @@ export function getLearnAll(){
         method:'get'
     })
 }
+
+export function getLearnNav(){
+    return request({
+        url:'learn/nav',
+        method:'get'
+    })
+}
+
+export function getLearnType(type){
+    return request({
+        url:`learn/${type}`,
+        method:'get'
+    })
+}

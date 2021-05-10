@@ -55,5 +55,6 @@
         align-items: center;
         background-color: #3f51b5;
         color: #fff;
+        //transition: all 3s ease-in-out 10s;
     }
 </style>

@@ -1,10 +1,12 @@
 <template>
     <div class="aside">
         <div class="user">
-            <m-avatar url="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" width="100"></m-avatar>
             <div class="user-message">
-                <span>曾伟明</span>
-                <span>2502531415@qq.com</span>
+                <m-avatar url="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" width="100"></m-avatar>
+                <div>
+                    <span>曾伟明</span>
+                    <span>2502531415@qq.com</span>
+                </div>
             </div>
         </div>
         <div class="aside-list">
@@ -35,8 +37,11 @@
         height:100%;
         overflow: hidden;
         .user{
-            padding: 20px 0px 20px 20px;
-            background-color:blueviolet;
+            background-image: url('@/assets/img/brand.jpg');
+            .user-message{
+                background: rgba(63,81,181,0.5);
+                padding: 20px 0px 20px 20px;
+            }
             span{
                 display: block;
                 margin-top:10px;

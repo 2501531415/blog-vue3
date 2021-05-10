@@ -52,7 +52,7 @@
     .m-acticle-item{
         background-color:#fff;
         border-radius: 5px;
-        box-shadow: 0 1px 2px rgb(151 151 151 / 58%);
+        box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
         .m-acticle-content{
             padding:15px;
             .m-acticle-time{
@@ -70,6 +70,11 @@
                    color: #3f51b5;
                    margin-left:15px;
                    cursor: pointer;
+                   padding: 2px;
+                   border-radius: 4px;
+                   &:hover{
+                       background: #eaecf7;
+                   }
                 }
             }
         }

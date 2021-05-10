@@ -39,5 +39,6 @@
     }
     .el-icon-s-fold,.el-icon-s-unfold{
         font-size: 25px;
+        color:#fff;
     }
 </style>

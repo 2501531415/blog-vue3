@@ -49,7 +49,7 @@ export default {
 .el-header{
     height:100%;
     background-color: #3f51b5;
-    border-bottom: 1px solid #eee;
+    //border-bottom: 1px solid #eee;
 }
 .el-main{
     height:100%;

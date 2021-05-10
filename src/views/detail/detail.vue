@@ -1,4 +1,5 @@
 <template>
+    <m-title></m-title>
     <div class="detail">
         <el-row>
             <el-col :span='12' :offset='6'>
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                     <div class="detail-tag">
-                         <tag-group :tagData="state.detailData.keyWord"></tag-group>
+                         <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
                     </div>
                 </div>
             </el-col>
@@ -61,6 +62,7 @@
     import {getArticleDetail,getLearnDetail} from '@/network/article.js'
     import {utcFormat} from '@/utils/time.js'
     import TagGroup from '@/components/element/tagGroup/index.vue'
+    import MTitle from '@/components/common/mTitle/index.vue'
     const route = useRoute()
 
     const state = reactive({
@@ -87,6 +89,7 @@
     //background-color:red;
     width:100%;
     transform: translate(0px,-80px);
+    //transition:all 0.4s ease-in-out 0s;
     .detail-content{
         background-color: #fff;
         border-radius: 4px;
