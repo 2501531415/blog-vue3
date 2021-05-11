@@ -1,7 +1,7 @@
 <template>
     <div class="m-comment">
         <div class="m-comment-user-message">
-            <m-avatar url="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" width="40"></m-avatar>
+            <!-- <m-avatar url="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" width="40"></m-avatar> -->
             <span>当前用户:admin</span>
         </div>
         <div class="m-conment-text">
@@ -15,13 +15,13 @@
 
 <script setup>
     //import {defineProps,defineEmit} from 'vue'
-    import MAvatar from '@/components/common/mAvatar/index.vue'
+    // import MAvatar from '@/components/common/mAvatar/index.vue'
 
 
     
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
     .m-comment{
         border: 1px solid #eee;
         padding:10px;
@@ -39,8 +39,5 @@
         .m-conment-text{
             margin:15px 0px;
         }
-    }
-    textarea{
-        border:none;
     }
 </style>

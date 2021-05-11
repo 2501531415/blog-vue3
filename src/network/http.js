@@ -1,9 +1,12 @@
 import axios from 'axios'
 import qs from 'qs'
-import {httpConfig} from '@/config/config.js'
 
 export function request(config){
-    const instance = axios.create(httpConfig)
+    const instance = axios.create({
+        //baseURL:'http://localhost:3001/api/v1',
+       baseURL:'http://blog.wmyy.fun/api/v1',
+       timeout:5000   
+    })
     //interceptor request
     instance.interceptors.request.use(config=>{
         config.data = qs.stringify(config.data)

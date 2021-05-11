@@ -60,6 +60,10 @@
                             <span>Powered By wmyy</span>
                         </div>
                     </div>
+
+                    <div class="detail-comment-list" v-if="state.commentData">
+                        <m-comment-list :commentData="state.commentData"></m-comment-list>
+                    </div>
                 </el-col>
             </el-row>
         </div>
@@ -71,20 +75,27 @@
     import {useRoute} from 'vue-router'
     import marked from 'marked'
     import {getArticleDetail,getLearnDetail} from '@/network/article.js'
+    import {getComment} from '@/network/comment.js'
     import {utcFormat} from '@/utils/time.js'
     import TagGroup from '@/components/element/tagGroup/index.vue'
     import MTitle from '@/components/common/mTitle/index.vue'
-    import MComment from '@/components/common/MComment/index.vue'
+    import MComment from '@/components/project/mComment/index.vue'
+    import MCommentList from '@/components/project/mCommentList/index.vue'
     const route = useRoute()
 
     const state = reactive({
-        detailData:null
+        detailData:null,
+        commentData:null
     })
 
     if(route.params.type == 'article'){
         getArticleDetail(route.query.id).then(res=>{
             res.data.content = marked(res.data.content)
             state.detailData = res.data
+        })
+        getComment(route.query.id).then(res=>{
+            console.log(res)
+            state.commentData = res.data
         })
     }else{
         getLearnDetail(route.query.id).then(res=>{
@@ -166,6 +177,9 @@
             font-size: 14px;
             color: gray;
         }
+    }
+    .detail-comment-list{
+        .detail-comment()
     }
 }
 .el-icon-star-on{
