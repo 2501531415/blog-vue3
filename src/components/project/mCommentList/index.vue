@@ -17,8 +17,11 @@
                         <span>{{item.meta.likes}}</span>
                     </div>
                     <div class="m-comment-replay">
-                        <span>回复</span>
+                        <span @click="replay(item._id)">回复</span>
                     </div>
+                </div>
+                <div class="m-comment-list-replay" v-if="replayId == item._id">
+                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur"></m-repaly>
                 </div>
            </div>
        </div>
@@ -26,9 +29,12 @@
 </template>
 
 <script setup>
-    import {defineProps} from 'vue'
+    import {defineProps,computed,ref} from 'vue'
     import MAvatar from '@/components/common/mAvatar/index.vue'
+    import MRepaly from '@/components/project/mReplay/index.vue'
     import {baseUrl} from '@/config/config.js'
+
+    const replayId = ref(null)
 
     const props = defineProps({
         commentData:{
@@ -36,6 +42,18 @@
             default:[]
         }
     })
+
+    const placeholder = (value)=>`回复${value}...`
+
+    //点击回复
+    const replay = (id)=>{
+        replayId.value = id
+    }
+
+    //评论框失去焦点
+    const inputBlur = ()=>{
+        replayId.value = null
+    }
 
 </script>
 
@@ -51,6 +69,7 @@
                 margin-right:10px;
             }
             .m-comment-content{
+                flex:1;
                 .m-comment-control{
                     margin-top:5px;
                     display: flex;

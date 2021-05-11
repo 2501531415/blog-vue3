@@ -82,12 +82,10 @@
     import MComment from '@/components/project/mComment/index.vue'
     import MCommentList from '@/components/project/mCommentList/index.vue'
     const route = useRoute()
-
     const state = reactive({
         detailData:null,
         commentData:null
     })
-
     if(route.params.type == 'article'){
         getArticleDetail(route.query.id).then(res=>{
             res.data.content = marked(res.data.content)
