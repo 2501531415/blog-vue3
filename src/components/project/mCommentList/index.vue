@@ -20,8 +20,31 @@
                         <span @click="replay(item._id)">回复</span>
                     </div>
                 </div>
-                <div class="m-comment-list-replay" v-if="replayId == item._id">
-                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur"></m-repaly>
+                <div class="m-comment-list-replay" v-if="state.replayId.includes(item._id)">
+                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur" :id="item._id"></m-repaly>
+                </div>
+                <div class="m-comment-children">
+                    <div class="m-comment-children-item" v-for="(child,indey) in item.secondComment" :key="indey">
+                        <div class="m-comment-avatar">
+                            <m-avatar :url="baseUrl + child.from_user.avatar" width="28"></m-avatar>
+                        </div>
+                        <div class="m-comment-content">
+                            <div class="m-comment-username">
+                                <span>{{child.from_user.username}}</span>
+                            </div>
+                            <div class="m-comment-word">
+                                <span>回复{{child.to_user.username}}：{{child.content}}</span>
+                            </div>
+                            <div class="m-comment-control">
+                                <div class="m-comment-replay">
+                                    <span @click="replay(child._id)">回复</span>
+                                </div>
+                            </div>
+                            <div class="m-comment-list-replay" v-if="state.replayId.includes(child._id)">
+                                <m-repaly :placeholder="placeholder(child.from_user.username)" @inputBlur="inputBlur" :id="child._id" bgc="#fff"></m-repaly>
+                            </div>
+                        </div>
+                    </div>
                 </div>
            </div>
        </div>
@@ -29,13 +52,16 @@
 </template>
 
 <script setup>
-    import {defineProps,computed,ref} from 'vue'
+    import {defineProps,computed,ref,reactive} from 'vue'
     import MAvatar from '@/components/common/mAvatar/index.vue'
     import MRepaly from '@/components/project/mReplay/index.vue'
     import {baseUrl} from '@/config/config.js'
 
-    const replayId = ref(null)
+    //const replayId = ref([])
 
+    const state = reactive({
+        replayId:[]
+    })
     const props = defineProps({
         commentData:{
             type:Array,
@@ -47,12 +73,17 @@
 
     //点击回复
     const replay = (id)=>{
-        replayId.value = id
+        if(!state.replayId.includes(id)){
+            state.replayId.push(id)
+        }
     }
 
     //评论框失去焦点
-    const inputBlur = ()=>{
-        replayId.value = null
+    const inputBlur = (id)=>{
+        setTimeout(() => {
+            const index = state.replayId.findIndex(item=>item == id)
+            state.replayId.splice(index,1)
+        }, 300);
     }
 
 </script>
@@ -81,6 +112,14 @@
                 }
                 .m-comment-word{
                     font-size: 14px;
+                }
+                .m-comment-children{
+                    .m-comment-children-item{
+                        display: flex;
+                        margin: 10px 0px;
+                        padding: 10px 0px;
+                        background-color:#fafbfc;
+                    }
                 }
             }
         }

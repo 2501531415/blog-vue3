@@ -1,5 +1,5 @@
 <template>
-    <div class="m-replay">
+    <div class="m-replay" :style="{'background-color':bgc}">
         <el-input :placeholder="placeholder" v-model="content"  @focus="inputFocus" @blur="inputBlur" ref="input"></el-input>
         <div class="m-replay-button">
             <el-button size="small" type="primary" :disabled="!inputDisable">评论</el-button>
@@ -19,6 +19,13 @@
         placeholder:{
             type:String,
             required:true
+        },
+        id:{
+            type:String
+        },
+        bgc:{
+            type:String,
+            default:'#fcfcfc'
         }
     })
 
@@ -29,7 +36,10 @@
     }
     const inputBlur =()=>{
         //inputDisable.value = true
-        emit('inputBlur')
+        console.log(inputDisable)
+        if(!inputDisable.value){
+            emit('inputBlur',props.id)
+        }
     }
 
     onMounted(()=>{
@@ -39,7 +49,6 @@
 
 <style lang="less" scoped>
     .m-replay{
-        background-color: #fcfcfc;
         padding: 10px;
         margin-top: 10px;
         .m-replay-button{
