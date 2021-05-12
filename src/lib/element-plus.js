@@ -1,4 +1,5 @@
-import {ElButton,ElContainer,ElAside,ElMain,ElHeader,ElFooter,ElIcon,ElMenu,ElMenuItem,ElSubmenu,ElScrollbar,ElRow,ElCol,ElTag,ElMessage,ElLoading,ElBacktop,ElInput} from 'element-plus'
+import {ElButton,ElContainer,ElAside,ElMain,ElHeader,ElFooter,ElIcon,ElMenu,ElMenuItem,ElSubmenu,ElScrollbar,ElRow,ElCol,ElTag,ElMessage,ElLoading,ElBacktop,ElInput,
+    ElDialog,ElForm,ElFormItem} from 'element-plus'
 
 const components = [
     ElButton,
@@ -16,7 +17,10 @@ const components = [
     ElCol,
     ElTag,
     ElBacktop,
-    ElInput
+    ElInput,
+    ElDialog,
+    ElForm,
+    ElFormItem
 ]
 const plugins = [
     ElLoading,

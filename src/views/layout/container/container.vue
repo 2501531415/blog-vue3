@@ -15,6 +15,7 @@
              </el-scrollbar>
              <el-backtop target=".el-scrollbar__wrap"  :bottom="bottom"></el-backtop>
         </el-container>
+        <Login/>
     </el-container>
 </template>
 
@@ -24,6 +25,7 @@
     import Aside from '@/views/layout/aside/aside.vue'
     import Footer from '@/views/layout/footer/footer.vue'
     import Main from '@/views/layout/main/main.vue'
+    import Login from '@/views/login/login.vue'
     const store = useStore()
     const bottom = 65
 </script>

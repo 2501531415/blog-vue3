@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="detail-comment">
-                        <m-comment></m-comment>
+                        <m-comment @submit="submit"></m-comment>
                         <div class="detail-comment-tip">
                             <span>Code1:Don't post illegal comments</span>
                         </div>
@@ -71,8 +71,9 @@
 </template>
 
 <script setup>
-    import {reactive} from 'vue'
+    import {reactive,ref,computed} from 'vue'
     import {useRoute} from 'vue-router'
+    import {useStore} from 'vuex'
     import marked from 'marked'
     import {getArticleDetail,getLearnDetail} from '@/network/article.js'
     import {getComment} from '@/network/comment.js'
@@ -82,10 +83,13 @@
     import MComment from '@/components/project/mComment/index.vue'
     import MCommentList from '@/components/project/mCommentList/index.vue'
     const route = useRoute()
+    const store = useStore()
     const state = reactive({
         detailData:null,
         commentData:null
     })
+
+    const userInfo = computed(()=>store.state.userInfo)
     if(route.params.type == 'article'){
         getArticleDetail(route.query.id).then(res=>{
             res.data.content = marked(res.data.content)
@@ -101,6 +105,16 @@
             res.detail.content = marked(res.detail.content)
             state.detailData = res.detail
         })
+    }
+
+    const submit = (value)=>{
+        //console.log(value)
+        //console.log(userInfo.value)
+        if(!userInfo.value){
+            return store.commit('changeLoginDialog',true)
+        }else{
+            console.log(userInfo.value)
+        }
     }
 </script>
 

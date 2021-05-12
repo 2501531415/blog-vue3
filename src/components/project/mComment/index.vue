@@ -5,10 +5,10 @@
             <span>当前用户:admin</span>
         </div>
         <div class="m-conment-text">
-            <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="要不要说点什么?"></el-input>
+            <el-input maxlength="5" v-model="commentData" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="要不要说点什么?"></el-input>
         </div>
         <div class="m-comment-submit">
-            <el-button size="small">提交</el-button>
+            <el-button size="small" @click="submit">提交</el-button>
         </div>
     </div>
 </template>
@@ -16,9 +16,14 @@
 <script setup>
     //import {defineProps,defineEmit} from 'vue'
     // import MAvatar from '@/components/common/mAvatar/index.vue'
+    import {ref,defineEmit} from 'vue'
 
+    const commentData = ref(null)
 
-    
+    const emit = defineEmit(['submit'])
+    const submit = ()=>{
+        emit('submit',commentData.value)
+    }    
 </script>
 
 <style lang="less">

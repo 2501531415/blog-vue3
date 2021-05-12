@@ -1,6 +1,6 @@
 <template>
     <div class="m-replay" :style="{'background-color':bgc}">
-        <el-input :placeholder="placeholder" v-model="content"  @focus="inputFocus" @blur="inputBlur" ref="input"></el-input>
+        <el-input maxlength="30" :placeholder="placeholder" v-model="content"  @focus="inputFocus" @blur="inputBlur" ref="input"></el-input>
         <div class="m-replay-button">
             <el-button size="small" type="primary" :disabled="!inputDisable">评论</el-button>
         </div>
@@ -51,6 +51,7 @@
     .m-replay{
         padding: 10px;
         margin-top: 10px;
+        border-radius: 4px;
         .m-replay-button{
             display: flex;
             justify-content: flex-end;

@@ -12,12 +12,18 @@
                     <span>{{item.comments}}</span>
                 </div>
                 <div class="m-comment-control">
-                    <div class="m-comment-likes">
-                        <i class="el-icon-star-off"></i>
-                        <span>{{item.meta.likes}}</span>
+                    <div class="m-comment-control-left">
+                        <span>几天前</span>
                     </div>
-                    <div class="m-comment-replay">
-                        <span @click="replay(item._id)">回复</span>
+                    <div class="m-comment-control-right">
+                         <div class="m-comment-likes">
+                             <i class="el-icon-star-off"></i>
+                             <span>{{item.meta.likes}}</span>
+                         </div>
+                         <div class="m-comment-replay">
+                             <i class="el-icon-chat-round"></i>
+                             <span @click="replay(item._id)">回复</span>
+                         </div>
                     </div>
                 </div>
                 <div class="m-comment-list-replay" v-if="state.replayId.includes(item._id)">
@@ -32,12 +38,19 @@
                             <div class="m-comment-username">
                                 <span>{{child.from_user.username}}</span>
                             </div>
-                            <div class="m-comment-word">
-                                <span>回复{{child.to_user.username}}：{{child.content}}</span>
+                            <div class="m-comment-children-word">
+                                <span>回复{{child.to_user.username}}：</span>
+                                <span>{{child.content}}</span>
                             </div>
                             <div class="m-comment-control">
-                                <div class="m-comment-replay">
-                                    <span @click="replay(child._id)">回复</span>
+                                <div class="m-comment-control-left">
+                                    <span>{{timeago(new Date(child.create_time).getTime())}}</span>
+                                </div>
+                                <div class="m-comment-control-right">
+                                    <div class="m-comment-replay">
+                                        <i class="el-icon-chat-round"></i>
+                                        <span @click="replay(child._id)">回复</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="m-comment-list-replay" v-if="state.replayId.includes(child._id)">
@@ -56,6 +69,7 @@
     import MAvatar from '@/components/common/mAvatar/index.vue'
     import MRepaly from '@/components/project/mReplay/index.vue'
     import {baseUrl} from '@/config/config.js'
+    import {timeago} from '@/utils/time.js'
 
     //const replayId = ref([])
 
@@ -90,7 +104,7 @@
 
 <style lang="less" scoped>
     .m-comment-list{
-        font-size: 12px;
+        font-size: 14px;
         .m-comment-list-item{
             display: flex;
             margin-bottom: 10px;
@@ -105,20 +119,32 @@
                     margin-top:5px;
                     display: flex;
                     align-items: center;
-                    .m-comment-replay{
-                        margin-left: 15px;
-                        cursor: pointer;
+                    justify-content: space-between;
+                    color: #9f9f9f;
+                    .m-comment-control-right{
+                        display: flex;
+                        align-items: center;
+                        & span{
+                            margin-left: 5px;
+                        }
+                        .m-comment-replay{
+                            margin-left: 15px;
+                            cursor: pointer;
+                        }
                     }
-                }
-                .m-comment-word{
-                    font-size: 14px;
                 }
                 .m-comment-children{
                     .m-comment-children-item{
                         display: flex;
                         margin: 10px 0px;
-                        padding: 10px 0px;
+                        padding: 10px;
+                        border-radius: 4px;
                         background-color:#fafbfc;
+                        .m-comment-children-word{
+                            & span:first-child{
+                                 color: #9f9f9f;
+                            }
+                        }
                     }
                 }
             }

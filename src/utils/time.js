@@ -11,8 +11,8 @@ function timeago(timestamp){
 		return '刚刚';
 	}
 	const minC = diffValue / minute; //计算时间差的分，时，天，周，月
-	const hourC = diffValue / hour;
-	const dayC = diffValue / day;
+	const hourC = parseInt(diffValue / hour);
+	const dayC = parseInt(diffValue / day);
 	const weekC = diffValue / week;
 	const monthC = diffValue / month;
 	let result = ''

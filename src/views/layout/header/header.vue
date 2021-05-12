@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="header-left">
-            <i :class="[store.state.sideStatus?'el-icon-s-fold':'el-icon-s-unfold']" @click="collapse"></i>
+            <i :class="[sideStatus?'el-icon-s-fold':'el-icon-s-unfold']" @click="collapse"></i>
         </div>
         <div class="header-right">
             <Menu :menu="menu" mode="horizontal" :router="true" :default-active="active" background-color="#3f51b5" text-color="#fff"></Menu>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-    import {watchEffect} from 'vue'
+    import {watchEffect,computed} from 'vue'
     import {useStore} from 'vuex'
     import {useRoute} from 'vue-router'
     import Menu from '@/components/element/menu/index.vue'
@@ -21,6 +21,8 @@
     {'title':'归档','path':'/file','icon':'files'},
     {'title':'我的','path':'/profile','icon':'user',children:[{'title':'测试','path':'/test','icon':'user'}]}]
     const active = route.fullPath
+
+    const sideStatus = computed(()=>store.state.sideStatus)
 
     const collapse = ()=>{
         store.commit('changeSideStatus',!store.state.sideStatus)
