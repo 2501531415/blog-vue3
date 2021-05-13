@@ -39,7 +39,7 @@
                                 <span>{{child.from_user.username}}</span>
                             </div>
                             <div class="m-comment-children-word">
-                                <span>回复{{child.to_user.username}}：</span>
+                                <span v-if="child.from_user.username != child.to_user.username">回复{{child.to_user.username}}：</span>
                                 <span>{{child.content}}</span>
                             </div>
                             <div class="m-comment-control">
