@@ -71,7 +71,7 @@
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .el-button{
         width:100%;
     }

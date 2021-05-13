@@ -9,7 +9,7 @@ const store = createStore({
         return {
             sideStatus:false,
             loginDialog:false,
-            userInfo:JSON.parse(cookie.get('userInfo'))
+            userInfo:cookie.get('userInfo')?JSON.parse(cookie.get('userInfo')):null
         }
     },
     getters,

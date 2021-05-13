@@ -28,7 +28,7 @@
     }
     
     const clearInput = ()=>{
-        commentData.value = null
+        commentData.value = ''
     }
     context.expose({
         clearInput

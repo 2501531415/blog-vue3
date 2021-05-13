@@ -29,6 +29,9 @@
         bgc:{
             type:String,
             default:'#fcfcfc'
+        },
+        commentId:{
+            type:String
         }
     })
 
@@ -48,9 +51,9 @@
     //点击评论
     const commentClick = ()=>{
         const commentData = {
-            comment_id:props.id,
+            comment_id:props.commentId,
             content:content.value,
-            toUser_id:props.toUserId,
+            to_userId:props.toUserId,
         }
         emit('commentClick',commentData)
     }

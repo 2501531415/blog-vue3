@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="detail-comment-list" v-if="state.commentData">
-                        <m-comment-list :commentData="state.commentData" @commentClick="commentClick"></m-comment-list>
+                        <m-comment-list :commentData="state.commentData" @commentClick="commentClick" ref="commentList"></m-comment-list>
                     </div>
                 </el-col>
             </el-row>
@@ -91,16 +91,22 @@
     })
     const comment = ref(null)
 
+    const commentList = ref(null)
+
     const userInfo = computed(()=>store.state.userInfo)
+    //获取评论列表
+    const getCommentList = ()=>{
+        getComment(route.query.id).then(res=>{
+            state.commentData = res.data
+        })
+    }
+
     if(route.params.type == 'article'){
         getArticleDetail(route.query.id).then(res=>{
             res.data.content = marked(res.data.content)
             state.detailData = res.data
         })
-        getComment(route.query.id).then(res=>{
-            console.log(res)
-            state.commentData = res.data
-        })
+        getCommentList()
     }else{
         getLearnDetail(route.query.id).then(res=>{
             console.log(res)
@@ -108,21 +114,23 @@
             state.detailData = res.detail
         })
     }
+    
     //评论点击事件
     const submit = (commentValue)=>{
         if(!userInfo.value){
             return store.commit('changeLoginDialog',true)
         }else{
-            //console.log(userInfo.value)
             const postData = {
                 article_id:state.detailData._id,
                 user_id:userInfo.value.user_id,
                 comments:commentValue
             }
-            // postComment(postData).then(res=>{
-            //     if(res.err_code !=200) ElMessage.error('评论失败')
-                
-            // })
+            postComment(postData).then(res=>{
+                if(res.err_code !=200) ElMessage.error('评论失败')
+                getCommentList()
+                ElMessage.success('评论成功')
+                comment.value.clearInput()
+            })
             //console.log(postData)
             //comment.value.clearInput()
         }   
@@ -132,13 +140,14 @@
         if(!userInfo.value){
             return store.commit('changeLoginDialog',true)
         }else{
-            commentValue.userInfo = userInfo.value
-            //console.log(commentValue)
-            // secondComment(commentValue).then(res=>{
-            //     if(res.err_code !=200) ElMessage.error('回复评论失败')
-                
-            // })
-            
+            commentValue.user_id = userInfo.value.user_id
+            secondComment(commentValue).then(res=>{
+                if(res.err_code !=200) ElMessage.error('回复评论失败')
+                console.log(commentList.value)
+                commentList.value.resetReplay(commentValue.to_userId)
+                getCommentList()
+                ElMessage.success('评论成功')
+            })
         }
         
     }

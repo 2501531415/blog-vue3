@@ -1,6 +1,6 @@
 <template>
     <div class="aside">
-        <div class="user" v-if="userInfo">
+        <div class="user" v-if="state.userInfo">
             <div class="user-message">
                 <m-avatar :url="baseUrl+userInfo.avatar" width="100"></m-avatar>
                 <div>

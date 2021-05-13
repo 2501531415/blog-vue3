@@ -1,5 +1,5 @@
 <template>
-    <div class="m-comment-list">
+    <div class="m-comment-list" v-if="commentData.length > 0">
        <div class="m-comment-list-item" v-for="(item,index) in commentData" :key="index">
            <div class="m-comment-avatar">
                <m-avatar :url="baseUrl + item.user.avatar" width="28"></m-avatar>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="m-comment-control">
                     <div class="m-comment-control-left">
-                        <span>几天前</span>
+                        <span>{{timeago(new Date(item.create_time).getTime())}}</span>
                     </div>
                     <div class="m-comment-control-right">
                          <div class="m-comment-likes">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="m-comment-list-replay" v-if="state.replayId.includes(item._id)">
-                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur" :id="item._id" :to-user-id="item.user_id" @commentClick="commentClick"></m-repaly>
+                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur" :comment-id="item._id" :id="item._id" :to-user-id="item.user_id" @commentClick="commentClick"></m-repaly>
                 </div>
                 <div class="m-comment-children">
                     <div class="m-comment-children-item" v-for="(child,indey) in item.secondComment" :key="indey">
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="m-comment-list-replay" v-if="state.replayId.includes(child._id)">
-                                <m-repaly :placeholder="placeholder(child.from_user.username)" @inputBlur="inputBlur" :id="child._id" bgc="#fff"></m-repaly>
+                                <m-repaly :placeholder="placeholder(child.from_user.username)" @inputBlur="inputBlur" :comment-id="child.comment_id" :id="child._id" :to-user-id="child.from_user.user_id" bgc="#fff" @commentClick="commentClick"></m-repaly>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-    import {defineProps,defineEmit,computed,ref,reactive} from 'vue'
+    import {defineProps,defineEmit,computed,ref,reactive,useContext} from 'vue'
     import MAvatar from '@/components/common/mAvatar/index.vue'
     import MRepaly from '@/components/project/mReplay/index.vue'
     import {baseUrl} from '@/config/config.js'
@@ -76,6 +76,7 @@
     const state = reactive({
         replayId:[]
     })
+    const context = useContext()
     const props = defineProps({
         commentData:{
             type:Array,
@@ -104,6 +105,15 @@
     const commentClick = (commentValue)=>{
         emit('commentClick',commentValue)
     }
+    //收起回复框
+    const resetReplay = (id)=>{
+        const index = state.replayId.findIndex(item=>item == id)
+        state.replayId.splice(index,1)
+    }
+
+    context.expose({
+        resetReplay
+    })
 </script>
 
 <style lang="less" scoped>
