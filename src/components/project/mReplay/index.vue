@@ -2,7 +2,7 @@
     <div class="m-replay" :style="{'background-color':bgc}">
         <el-input maxlength="30" :placeholder="placeholder" v-model="content"  @focus="inputFocus" @blur="inputBlur" ref="input"></el-input>
         <div class="m-replay-button">
-            <el-button size="small" type="primary" :disabled="!inputDisable">评论</el-button>
+            <el-button size="small" type="primary" :disabled="!inputDisable" @click="commentClick">评论</el-button>
         </div>
     </div>
 </template>
@@ -10,7 +10,7 @@
 <script setup>
     import {defineProps,ref,computed, onMounted,defineEmit} from 'vue'
 
-    const content = ref(null)
+    const content = ref('')
 
     const input = ref(null)
     //const inputDisable = ref(true)
@@ -23,14 +23,17 @@
         id:{
             type:String
         },
+        toUserId:{
+            type:String
+        },
         bgc:{
             type:String,
             default:'#fcfcfc'
         }
     })
 
-    const emit = defineEmit(['inputBlur'])
-    const inputDisable = computed(()=>content.value>0)
+    const emit = defineEmit(['inputBlur','commentClick'])
+    const inputDisable = computed(()=>content.value.length>0)
     const inputFocus =()=>{
         //inputDisable.value = false
     }
@@ -40,6 +43,16 @@
         if(!inputDisable.value){
             emit('inputBlur',props.id)
         }
+    }
+
+    //点击评论
+    const commentClick = ()=>{
+        const commentData = {
+            comment_id:props.id,
+            content:content.value,
+            toUser_id:props.toUserId,
+        }
+        emit('commentClick',commentData)
     }
 
     onMounted(()=>{
@@ -52,7 +65,7 @@
         padding: 10px;
         margin-top: 10px;
         border-radius: 4px;
-        .m-replay-button{
+        &-button{
             display: flex;
             justify-content: flex-end;
             margin-top: 10px;

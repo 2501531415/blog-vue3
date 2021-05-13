@@ -68,7 +68,7 @@
     .category-nav{
         display: flex;
         justify-content: center;
-        .category-nav-item{
+        &-item{
             padding: 10px 15px;
             cursor: pointer;
         }

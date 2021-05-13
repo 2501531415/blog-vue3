@@ -5,10 +5,10 @@
             <span>当前用户:admin</span>
         </div>
         <div class="m-conment-text">
-            <el-input maxlength="5" v-model="commentData" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="要不要说点什么?"></el-input>
+            <el-input maxlength="5" class="m-textarea" v-model="commentData" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="要不要说点什么?"></el-input>
         </div>
         <div class="m-comment-submit">
-            <el-button size="small" @click="submit">提交</el-button>
+            <el-button size="small" :disabled="!inputValue" @click="submit">提交</el-button>
         </div>
     </div>
 </template>
@@ -16,14 +16,23 @@
 <script setup>
     //import {defineProps,defineEmit} from 'vue'
     // import MAvatar from '@/components/common/mAvatar/index.vue'
-    import {ref,defineEmit} from 'vue'
+    import {ref,defineEmit,useContext,computed} from 'vue'
 
-    const commentData = ref(null)
+    const context = useContext()
 
+    const commentData = ref('')
+    const inputValue = computed(()=>commentData.value.length>0)
     const emit = defineEmit(['submit'])
     const submit = ()=>{
         emit('submit',commentData.value)
-    }    
+    }
+    
+    const clearInput = ()=>{
+        commentData.value = null
+    }
+    context.expose({
+        clearInput
+    })
 </script>
 
 <style lang="less">
@@ -31,18 +40,22 @@
         border: 1px solid #eee;
         padding:10px;
         border-radius: 4px;
-        .m-comment-user-message{
+        &-user-message{
             padding:10px 0px;
             display: flex;
             align-items: center;
             border-bottom: 1px dashed #eee;
         }
-        .m-comment-submit{
+        &-submit{
             display: flex;
             justify-content: flex-end;
+            margin:10px 0px;
         }
-        .m-conment-text{
+        &-text{
             margin:15px 0px;
         }
+    }
+    .m-textarea textarea{
+        border:none!important;
     }
 </style>

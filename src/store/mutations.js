@@ -1,3 +1,5 @@
+import cookie from '@/lib/cookie.js'
+
 const mutations = {
     changeSideStatus:(state,payload)=>{
         state.sideStatus = payload
@@ -6,7 +8,8 @@ const mutations = {
         state.loginDialog = payload
     },
     changeUserInfo:(state,payload)=>{
-        state.userInfo = payload
+        //state.userInfo = payload
+        cookie.set('userInfo',payload,{ expires: 7 })
     }
     
 }

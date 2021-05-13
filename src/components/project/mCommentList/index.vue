@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="m-comment-list-replay" v-if="state.replayId.includes(item._id)">
-                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur" :id="item._id"></m-repaly>
+                    <m-repaly :placeholder="placeholder(item.user.username)" @inputBlur="inputBlur" :id="item._id" :to-user-id="item.user_id" @commentClick="commentClick"></m-repaly>
                 </div>
                 <div class="m-comment-children">
                     <div class="m-comment-children-item" v-for="(child,indey) in item.secondComment" :key="indey">
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-    import {defineProps,computed,ref,reactive} from 'vue'
+    import {defineProps,defineEmit,computed,ref,reactive} from 'vue'
     import MAvatar from '@/components/common/mAvatar/index.vue'
     import MRepaly from '@/components/project/mReplay/index.vue'
     import {baseUrl} from '@/config/config.js'
@@ -82,7 +82,7 @@
             default:[]
         }
     })
-
+    const emit = defineEmit(['commentClick'])
     const placeholder = (value)=>`回复${value}...`
 
     //点击回复
@@ -100,12 +100,16 @@
         }, 300);
     }
 
+    //点击评论
+    const commentClick = (commentValue)=>{
+        emit('commentClick',commentValue)
+    }
 </script>
 
 <style lang="less" scoped>
     .m-comment-list{
         font-size: 14px;
-        .m-comment-list-item{
+        &-item{
             display: flex;
             margin-bottom: 10px;
             padding: 10px 0px;
@@ -121,7 +125,7 @@
                     align-items: center;
                     justify-content: space-between;
                     color: #9f9f9f;
-                    .m-comment-control-right{
+                    &-right{
                         display: flex;
                         align-items: center;
                         & span{
@@ -134,7 +138,7 @@
                     }
                 }
                 .m-comment-children{
-                    .m-comment-children-item{
+                    &-item{
                         display: flex;
                         margin: 10px 0px;
                         padding: 10px;

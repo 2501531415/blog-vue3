@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="detail-comment">
-                        <m-comment @submit="submit"></m-comment>
+                        <m-comment @submit="submit" ref="comment"></m-comment>
                         <div class="detail-comment-tip">
                             <span>Code1:Don't post illegal comments</span>
                         </div>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="detail-comment-list" v-if="state.commentData">
-                        <m-comment-list :commentData="state.commentData"></m-comment-list>
+                        <m-comment-list :commentData="state.commentData" @commentClick="commentClick"></m-comment-list>
                     </div>
                 </el-col>
             </el-row>
@@ -71,13 +71,14 @@
 </template>
 
 <script setup>
-    import {reactive,ref,computed} from 'vue'
+    import {reactive,ref,computed, onMounted} from 'vue'
     import {useRoute} from 'vue-router'
     import {useStore} from 'vuex'
     import marked from 'marked'
     import {getArticleDetail,getLearnDetail} from '@/network/article.js'
-    import {getComment} from '@/network/comment.js'
+    import {getComment,postComment,secondComment} from '@/network/comment.js'
     import {utcFormat} from '@/utils/time.js'
+    import {ElMessage} from 'element-plus'
     import TagGroup from '@/components/element/tagGroup/index.vue'
     import MTitle from '@/components/common/mTitle/index.vue'
     import MComment from '@/components/project/mComment/index.vue'
@@ -88,6 +89,7 @@
         detailData:null,
         commentData:null
     })
+    const comment = ref(null)
 
     const userInfo = computed(()=>store.state.userInfo)
     if(route.params.type == 'article'){
@@ -106,15 +108,39 @@
             state.detailData = res.detail
         })
     }
-
-    const submit = (value)=>{
-        //console.log(value)
-        //console.log(userInfo.value)
+    //评论点击事件
+    const submit = (commentValue)=>{
         if(!userInfo.value){
             return store.commit('changeLoginDialog',true)
         }else{
-            console.log(userInfo.value)
+            //console.log(userInfo.value)
+            const postData = {
+                article_id:state.detailData._id,
+                user_id:userInfo.value.user_id,
+                comments:commentValue
+            }
+            // postComment(postData).then(res=>{
+            //     if(res.err_code !=200) ElMessage.error('评论失败')
+                
+            // })
+            //console.log(postData)
+            //comment.value.clearInput()
+        }   
+    }
+    //回复评论点击事件
+    const commentClick = (commentValue)=>{
+        if(!userInfo.value){
+            return store.commit('changeLoginDialog',true)
+        }else{
+            commentValue.userInfo = userInfo.value
+            //console.log(commentValue)
+            // secondComment(commentValue).then(res=>{
+            //     if(res.err_code !=200) ElMessage.error('回复评论失败')
+                
+            // })
+            
         }
+        
     }
 </script>
 
@@ -176,14 +202,14 @@
         .detail-content();
         margin-top:50px;
         padding:30px;
-        .detail-comment-tip{
+        &-tip{
             margin: 30px 10px;
             border-radius: 4px;
             padding: 10px;
             background-color: #f6f6f6;
             opacity: 0.7;
         }
-        .detail-comment-from{
+        &-from{
             display: flex;
             justify-content: flex-end;
             font-size: 14px;

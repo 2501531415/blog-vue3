@@ -1,19 +1,22 @@
 <template>
-    <el-dialog title="登录" v-model="dialogLoginVisiable" @close="loginDialogClose">
+    <el-dialog title="账密登录" v-model="dialogLoginVisiable" @close="loginDialogClose" width="20%" top="30vh">
         <el-form :model="state.user" :rules="state.rules" ref="loginRef">
-            <el-form-item label="账号" prop="username">
-                <el-input v-model="state.user.username" autocomplete="off"></el-input>
+            <el-form-item prop="username">
+                <el-input v-model="state.user.username" placeholder="账号" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input v-model="state.user.password" type="password" autocomplete="off"></el-input>
+            <el-form-item prop="password">
+                <el-input v-model="state.user.password" placeholder="请输入密码" type="password" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submit">登录</el-button>
+            </el-form-item>
+            <el-form-item>
+                <div class="login-other">
+                    <span>注册</span>
+                    <span>忘记密码</span>
+                </div>
             </el-form-item>
         </el-form>
-        <template #footer>
-            <span class="dialog-footer">
-            <el-button @click="dialogLoginVisiable = false">取 消</el-button>
-            <el-button type="primary" @click="submit">确 定</el-button>
-            </span>
-        </template>
     </el-dialog>
 </template>
 
@@ -28,8 +31,8 @@
     const loginRef = ref(null)
     const state = reactive({
         user:{
-            username:'admin',
-            password:123456
+            username:null,
+            password:null
         },
         rules:{
             username:[
@@ -67,3 +70,18 @@
     }
 
 </script>
+
+<style lang="less">
+    .el-button{
+        width:100%;
+    }
+    .login-other{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span{
+            color:#409eff;
+            line-height: normal;
+        }
+    }
+</style>
