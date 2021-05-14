@@ -1,5 +1,5 @@
 <template>
-    <div class="m-comment-list" v-if="commentData.length > 0">
+    <div class="m-comment-list">
        <div class="m-comment-list-item" v-for="(item,index) in commentData" :key="index">
            <div class="m-comment-avatar">
                <m-avatar :url="baseUrl + item.user.avatar" width="28"></m-avatar>

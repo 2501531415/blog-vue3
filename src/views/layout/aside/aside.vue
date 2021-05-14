@@ -1,11 +1,11 @@
 <template>
     <div class="aside">
-        <div class="user" v-if="state.userInfo">
+        <div class="user" v-if="state.adminInfo">
             <div class="user-message">
-                <m-avatar :url="baseUrl+userInfo.avatar" width="100"></m-avatar>
+                <m-avatar :url="baseUrl+state.adminInfo.avatar" width="100"></m-avatar>
                 <div>
-                    <span>{{userInfo.username}}</span>
-                    <span>{{userInfo.introduce}}</span>
+                    <span>{{state.adminInfo.name}}</span>
+                    <span>{{state.adminInfo.introduce}}</span>
                 </div>
             </div>
         </div>
@@ -20,6 +20,7 @@
     import {useStore} from 'vuex'
     import {useRouter} from 'vue-router'
     import {baseUrl} from '@/config/config.js'
+    import {introduce} from '@/network/login.js'
     import MAvatar from '@/components/common/mAvatar/index.vue'
     import MList from '@/components/common/mList/index.vue'
 
@@ -30,7 +31,11 @@
     const router = useRouter()
 
     const state = reactive({
-        userInfo:null
+        adminInfo:null
+    })
+
+    introduce().then(res=>{
+        state.adminInfo = res.data[0]
     })
     const listClick = (data)=>{
         console.log(data.path)

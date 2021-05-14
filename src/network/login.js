@@ -7,3 +7,12 @@ export function login(data){
         data
     })
 }
+
+//admin info
+
+export function introduce(){
+    return request({
+        url:'/introduce',
+        method:'get'
+    })
+}

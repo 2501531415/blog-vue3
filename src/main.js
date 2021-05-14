@@ -9,6 +9,8 @@ import '@/assets/less/global.less'
 //import '@/assets/less/markdown.less'
 import 'highlight.js/styles/atom-one-light.css' //highlight样式文件
 
+import 'nprogress/nprogress.css'
+
 const app = createApp(App)
 
 //element-plus

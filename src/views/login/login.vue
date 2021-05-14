@@ -31,8 +31,8 @@
     const loginRef = ref(null)
     const state = reactive({
         user:{
-            username:null,
-            password:null
+            username:'admin',
+            password:123456
         },
         rules:{
             username:[
@@ -58,7 +58,6 @@
         loginRef.value.validate((valid)=>{
             if(valid){
                 login(state.user).then(res=>{
-                    console.log(res)
                     if(res.err_code != 200) return ElMessage.error('登录失败')
 
                     store.commit('changeUserInfo', res.data)

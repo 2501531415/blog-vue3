@@ -62,7 +62,8 @@
                     </div>
 
                     <div class="detail-comment-list" v-if="state.commentData">
-                        <m-comment-list :commentData="state.commentData" @commentClick="commentClick" ref="commentList"></m-comment-list>
+                        <m-comment-list :commentData="state.commentData" @commentClick="commentClick" ref="commentList" v-if="state.commentData.length > 0"></m-comment-list>
+                        <el-empty description="请留下您的评论" v-else></el-empty>
                     </div>
                 </el-col>
             </el-row>
