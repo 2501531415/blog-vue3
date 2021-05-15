@@ -16,3 +16,26 @@ export function introduce(){
         method:'get'
     })
 }
+
+//register
+
+export function registerApi(registerData){
+    return request({
+        url:'/user/register',
+        method:'post',
+        data:registerData
+    })
+}
+
+//forget
+
+export function forgetApi(data){
+    return request({
+        url:'/user/forget',
+        method:'post',
+        data:{
+            email:data.email,
+            password:data.newPassword
+        }
+    })
+}

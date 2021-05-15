@@ -1,7 +1,7 @@
 <template>
     <div class="m-acticle">
         <el-row>
-            <el-col :span="16" :offset="4" v-for="(item,index) in acticle" :key="index">
+            <el-col :span="12" :offset="6" v-for="(item,index) in acticle" :key="index">
                 <div class="m-acticle-item">
                     <div class="m-acticle-content">
                         <div class="m-acticle-time">
@@ -52,7 +52,7 @@
     .m-acticle-item{
         background-color:#fff;
         border-radius: 5px;
-        box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
+        //box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
         .m-acticle-content{
             padding:15px;
             .m-acticle-time{

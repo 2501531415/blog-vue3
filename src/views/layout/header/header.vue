@@ -6,7 +6,7 @@
         <div class="header-right">
             <Menu :menu="menu" mode="horizontal" :router="true" :default-active="active" background-color="#3f51b5" text-color="#fff"></Menu>
             <div class="header-right-user">
-                <el-button type="primary" v-if="!userInfo" @click="login">去登录</el-button>
+                <el-button v-if="!userInfo" type="primary" @click="login" plain>去登录</el-button>
                 <el-dropdown v-else>
                     <div class="el-dropdown-link">
                         <m-avatar :url="baseUrl+userInfo.avatar" width="30"></m-avatar>
@@ -37,7 +37,7 @@
     const menu = [{'title':'首页','path':'/home','icon':'s-home'},
     {'title':'分类','path':'/category','icon':'collection-tag'},
     {'title':'归档','path':'/file','icon':'files'},
-    {'title':'我的','path':'/profile','icon':'user',children:[{'title':'测试','path':'/test','icon':'user'}]}]
+    ]
     const active = route.fullPath
 
     //侧边栏是否展开

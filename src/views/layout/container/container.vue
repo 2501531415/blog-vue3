@@ -42,8 +42,9 @@ export default {
 }
 .el-aside{
     height:100%;
-    box-shadow: 1px 2px 5px rgb(0 0 0 / 10%);
     transition: all 2s ease 0s;
+    background-color: #fff;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 .side{
     width:0!important;
@@ -56,6 +57,6 @@ export default {
 .el-main{
     height:100%;
     padding:0!important;
-    background-color:#eee ;
+    background-color:rgba(0,0,0,0.05) ;
 }
 </style>
