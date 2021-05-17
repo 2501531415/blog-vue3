@@ -17,8 +17,8 @@
 <script setup>
     import {useRouter} from 'vue-router'
     import {animate} from '@/lib/animate.js'
-    import { onMounted } from 'vue'
-
+    import { onMounted,ref} from 'vue'
+    const box = ref(null)
     const router = useRouter()
     const enter = ()=>{
         router.push('/page')

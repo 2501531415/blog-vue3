@@ -7,7 +7,7 @@
             <el-header>
                 <Header></Header>
             </el-header>
-            <el-scrollbar>
+            <el-scrollbar @scroll="scroll">
                 <el-main>
                     <Main/>
                     <Footer/>
@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+    import {provide,ref} from 'vue'
     import {useStore} from 'vuex'
     import Header from '@/views/layout/header/header.vue'
     import Aside from '@/views/layout/aside/aside.vue'
@@ -28,6 +29,14 @@
     import Login from '@/views/login/login.vue'
     const store = useStore()
     const bottom = 65
+
+    const top = ref(0)
+
+    const scroll = (e)=>{
+        top.value = e.scrollTop
+    }
+
+    provide('top',top)
 </script>
 
 <script>
