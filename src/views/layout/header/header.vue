@@ -1,5 +1,6 @@
 <template>
     <div class="header">
+        <span v-show="titleShow" class="header-title" :style="{'left':sideStatus?`${width}`:'16.6%'}">{{headerTitle}}</span>
         <div class="header-left">
             <i :class="[sideStatus?'el-icon-s-fold':'el-icon-s-unfold']" @click="collapse"></i>
         </div>
@@ -25,7 +26,7 @@
 </template>
 
 <script setup>
-    import {watchEffect,computed} from 'vue'
+    import {watchEffect,computed, onMounted} from 'vue'
     import {useStore} from 'vuex'
     import {useRoute} from 'vue-router'
     import Menu from '@/components/element/menu/index.vue'
@@ -39,7 +40,13 @@
     {'title':'归档','path':'/file','icon':'files'},
     ]
     const active = route.fullPath
+    const headerTitle = computed(()=>store.state.headerTitle)
 
+    const width = computed(()=>{
+        return 'calc(.166*(100vw - 300px) + 300px)'
+    })
+
+    const titleShow = computed(()=>store.state.headerTitleShow)
     //侧边栏是否展开
     const sideStatus = computed(()=>store.state.sideStatus)
     //用户信息
@@ -56,6 +63,9 @@
         store.commit('changeUserInfo',null)
         cookie.remove('userInfo')
     }
+    onMounted(()=>{
+        console.log(window.screen.availWidth)
+    })
 </script>
 
 <style lang="less" scoped>
@@ -68,6 +78,13 @@
         &-right{
             display: flex;
             align-items:center;
+        }
+        &-title{
+            position: absolute;
+            font-size: 30px;
+            font-weight: 500;
+            color:white;
+            transition: left 1s ease 0s;
         }
     }
     .el-icon-s-fold,.el-icon-s-unfold{

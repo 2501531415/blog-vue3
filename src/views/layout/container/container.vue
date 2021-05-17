@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-    import {provide,ref} from 'vue'
+    import {provide,ref,computed} from 'vue'
     import {useStore} from 'vuex'
     import Header from '@/views/layout/header/header.vue'
     import Aside from '@/views/layout/aside/aside.vue'
@@ -30,13 +30,26 @@
     const store = useStore()
     const bottom = 65
 
-    const top = ref(0)
+    const scrollTop = ref(0)
 
     const scroll = (e)=>{
-        top.value = e.scrollTop
+        scrollTop.value = e.scrollTop
+        //scrollTo()
     }
 
-    provide('top',top)
+    const status = computed(()=>store.state.headerTitleShow)
+    //控制title显示方法
+    const showTitle = ()=>{
+        if(!status.value && scrollTop.value > 13){
+            store.commit('changeHeaderTitleShow', true)
+        }else if(status.value && scrollTop.value < 13){
+            store.commit('changeHeaderTitleShow', false)
+        }
+    }
+
+    provide('scrollTop',scrollTop)
+
+    provide('showTitle',showTitle)
 </script>
 
 <script>
