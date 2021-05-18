@@ -1,73 +1,73 @@
 <template>
     <div class="detail">
         <m-title></m-title>
-        <div class="detail-container">
-            <el-row>
-                <el-col :span='12' :offset='6'>
-                    <div class="detail-content" v-if="state.detailData">
-                        <div class="detail-message">
-                            <div>
-                                <span>作者：</span>
-                                <span>{{state.detailData.author}}</span>
-                            </div>
-                            <div>
-                                <i class="el-icon-view"></i>
-                                <span>{{state.detailData.meta.views}}</span>
-                            </div>
-                            <div>
-                                 <i class="el-icon-star-on"></i>
-                                <span>{{state.detailData.meta.likes}}</span>
-                            </div>
-                            <div>
-                                <i class="el-icon-document"></i>
-                                <span>{{state.detailData.meta.comments}}</span>
-                            </div>
-                            <div>
-                                <span>字数：</span>
-                                <span>{{state.detailData.number}}</span>
-                            </div>
-                            <div class="detail-time">
-                                <span>创建时间：</span>
-                                <span>{{utcFormat(state.detailData.create_time)}}</span>
-                            </div>
+        <!-- <div class="detail-sart">
+            
+        </div> -->
+        <el-row class="detail-container">
+            <el-col :span='12' :offset='6'>
+                <div class="detail-content" v-if="state.detailData">
+                    <div class="detail-message">
+                        <div>
+                            <span>作者：</span>
+                            <span>{{state.detailData.author}}</span>
                         </div>
-                       <div class="detail-content-word">
-                            <div class="detail-title">
-                                <span>{{state.detailData.title}}</span>
-                            </div>
-                            <div class="detail-word" v-html="state.detailData.content" v-highlight></div>
-                            <div class="detail-bottom-message">
-                                <div class="bottom-message-time">
-                                    <span>最后更新时间：</span>
-                                    <span>{{utcFormat(state.detailData.update_time)}}</span>
-                                </div>
-                                <div class="bottom-message-url">
-                                    <span>外部链接：</span>
-                                    <span>暂无</span>
-                                </div>
-                            </div>
+                        <div>
+                            <i class="el-icon-view"></i>
+                            <span>{{state.detailData.meta.views}}</span>
                         </div>
-                        <div class="detail-tag">
-                             <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
+                        <div>
+                             <i class="el-icon-star-on"></i>
+                            <span>{{state.detailData.meta.likes}}</span>
+                        </div>
+                        <div>
+                            <i class="el-icon-document"></i>
+                            <span>{{state.detailData.meta.comments}}</span>
+                        </div>
+                        <div>
+                            <span>字数：</span>
+                            <span>{{state.detailData.number}}</span>
+                        </div>
+                        <div class="detail-time">
+                            <span>创建时间：</span>
+                            <span>{{utcFormat(state.detailData.create_time)}}</span>
                         </div>
                     </div>
-                    <div class="detail-comment">
-                        <m-comment @submit="submit" ref="comment"></m-comment>
-                        <div class="detail-comment-tip">
-                            <span>Code1:Don't post illegal comments</span>
+                   <div class="detail-content-word">
+                        <div class="detail-title">
+                            <span>{{state.detailData.title}}</span>
                         </div>
-                        <div class="detail-comment-from">
-                            <span>Powered By wmyy</span>
+                        <div class="detail-word" v-html="state.detailData.content" v-highlight></div>
+                        <div class="detail-bottom-message">
+                            <div class="bottom-message-time">
+                                <span>最后更新时间：</span>
+                                <span>{{utcFormat(state.detailData.update_time)}}</span>
+                            </div>
+                            <div class="bottom-message-url">
+                                <span>外部链接：</span>
+                                <span>暂无</span>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="detail-comment-list" v-if="state.commentData">
-                        <m-comment-list :commentData="state.commentData" @commentClick="commentClick" ref="commentList" v-if="state.commentData.length > 0"></m-comment-list>
-                        <el-empty description="请留下您的评论" v-else></el-empty>
+                    <div class="detail-tag">
+                         <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
                     </div>
-                </el-col>
-            </el-row>
-        </div>
+                </div>
+                <div class="detail-comment" v-if="state.commentData">
+                    <m-comment @submit="submit" ref="comment"></m-comment>
+                    <div class="detail-comment-tip">
+                        <span>Code1:Don't post illegal comments</span>
+                    </div>
+                    <div class="detail-comment-from">
+                        <span>Powered By wmyy</span>
+                    </div>
+                </div>
+                <div class="detail-comment-list" v-if="state.commentData">
+                    <m-comment-list :commentData="state.commentData" @commentClick="commentClick" ref="commentList" v-if="state.commentData.length > 0"></m-comment-list>
+                    <el-empty description="请留下您的评论" v-else></el-empty>
+                </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
