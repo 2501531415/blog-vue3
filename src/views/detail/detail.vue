@@ -1,9 +1,12 @@
 <template>
     <div class="detail">
         <m-title></m-title>
-        <!-- <div class="detail-sart">
-            
-        </div> -->
+        <div class="detail-sart" :style="{'left':sideStatus?left:'20%'}" v-if="state.detailData">
+            <m-button icon="el-icon-star-off" :badge="state.detailData.meta.likes" @click="starClick" v-if="!isLiked"></m-button>
+             <m-button icon="el-icon-star-on" :badge="state.detailData.meta.likes"  v-else></m-button>
+            <m-button icon="el-icon-message" :badge="state.detailData.meta.comments" @click="commentIconClick"></m-button>
+            <m-button icon="el-icon-view" :badge="state.detailData.meta.views"></m-button>
+        </div>
         <el-row class="detail-container">
             <el-col :span='12' :offset='6'>
                 <div class="detail-content" v-if="state.detailData">
@@ -53,7 +56,7 @@
                          <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
                     </div>
                 </div>
-                <div class="detail-comment" v-if="state.commentData">
+                <div class="detail-comment" v-if="state.commentData" ref="commentRef">
                     <m-comment @submit="submit" ref="comment"></m-comment>
                     <div class="detail-comment-tip">
                         <span>Code1:Don't post illegal comments</span>
@@ -72,11 +75,11 @@
 </template>
 
 <script setup>
-    import {reactive,ref,computed, onMounted} from 'vue'
+    import {reactive,ref,computed, onMounted, inject} from 'vue'
     import {useRoute} from 'vue-router'
     import {useStore} from 'vuex'
     import marked from 'marked'
-    import {getArticleDetail,getLearnDetail} from '@/network/article.js'
+    import {getArticleDetail,getLearnDetail,postLike} from '@/network/article.js'
     import {getComment,postComment,secondComment} from '@/network/comment.js'
     import {utcFormat} from '@/utils/time.js'
     import {ElMessage} from 'element-plus'
@@ -84,15 +87,26 @@
     import MTitle from '@/components/common/mTitle/index.vue'
     import MComment from '@/components/project/mComment/index.vue'
     import MCommentList from '@/components/project/mCommentList/index.vue'
+    import MButton from '@/components/project/mButton/index.vue'
     const route = useRoute()
     const store = useStore()
     const state = reactive({
         detailData:null,
         commentData:null
     })
+
+    const commentRef = ref(null)
     const comment = ref(null)
 
     const commentList = ref(null)
+
+    const isLiked = ref(null)
+
+    const scrollTo = inject('scrollTo')
+
+    const sideStatus = computed(()=>store.state.sideStatus)
+
+    const left = computed(()=>`calc(0.2*(100vw - 300px) + 300px)`)
 
     const userInfo = computed(()=>store.state.userInfo)
     //获取评论列表
@@ -103,9 +117,12 @@
     }
 
     if(route.params.type == 'article'){
-        getArticleDetail(route.query.id).then(res=>{
+        const id = userInfo.value?userInfo.value.user_id:null
+        getArticleDetail(route.query.id,id).then(res=>{
+            console.log(res.data)
             res.data.content = marked(res.data.content)
             state.detailData = res.data
+            isLiked.value = res.other?res.other.isLiked:null
         })
         getCommentList()
     }else{
@@ -152,10 +169,42 @@
         }
         
     }
+    //侧边栏comment点击
+    const commentIconClick = ()=>{
+        scrollTo(commentRef.value.offsetTop)
+    }
+    //like
+    const starClick = ()=>{
+        if(!userInfo.value){
+            return store.commit('changeLoginDialog',true)
+        }else{
+            const likeData = {
+                user_id:userInfo.value.user_id,
+                name_id:state.detailData._id
+            }
+            postLike('article',likeData).then(res=>{
+                if(res.err_code !=200) return ElMessage.error('点赞失败')
+                state.detailData.meta.likes+=1
+                ElMessage.success('点赞成功')
+            })
+        }   
+    }
 </script>
 
 <style lang="less">
 @import '@/assets/less/markdown.less';
+.detail-sart{
+    position: fixed;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    top:40%;
+    transform: translate(0px,-50%);
+    transition: left 2s ease 0s;
+    .m-button{
+        margin-bottom: 10px;
+    }
+}
 .detail-container{
     //background-color:red;
     width:100%;

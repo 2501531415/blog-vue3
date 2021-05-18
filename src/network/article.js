@@ -7,10 +7,13 @@ export function getArticle(){
     })
 }
 
-export function getArticleDetail(id){
+export function getArticleDetail(id,userId){
     return request({
         url:`article/detail/${id}`,
-        method:'get'
+        method:'get',
+        params:{
+            user_id:userId?userId:null
+        }
     })
 }
 
@@ -39,5 +42,15 @@ export function getLearnType(type){
     return request({
         url:`learn/${type}`,
         method:'get'
+    })
+}
+
+//点赞
+
+export function postLike(type,data){
+    return request({
+        url:`comments/likes/${type}`,
+        method:'post',
+        data
     })
 }
