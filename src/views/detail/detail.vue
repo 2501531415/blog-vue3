@@ -3,7 +3,7 @@
         <m-title></m-title>
         <div class="detail-sart" :style="{'left':sideStatus?left:'20%'}" v-if="state.detailData && state.commentData">
             <m-button icon="el-icon-star-off" :badge="state.detailData.meta.likes" @click="starClick" v-if="!isLiked"></m-button>
-            <m-button icon="el-icon-star-on" :badge="state.detailData.meta.likes"  v-else></m-button>
+            <m-button icon="el-icon-star-on" :badge="state.detailData.meta.likes" color="#3f51b5" v-else></m-button>
             <m-button icon="el-icon-message" :badge="state.detailData.meta.comments" @click="commentIconClick"></m-button>
             <m-button icon="el-icon-view" :badge="state.detailData.meta.views"></m-button>
         </div>
@@ -185,6 +185,7 @@
             postLike('article',likeData).then(res=>{
                 if(res.err_code !=200) return ElMessage.error('点赞失败')
                 state.detailData.meta.likes+=1
+                isLiked.value = true
                 ElMessage.success('点赞成功')
             })
         }   
@@ -192,17 +193,17 @@
 
     //watch userInfo change
     watch(userInfo,(value,old)=>{
-        // if(!value){
-        //     isLiked.value = false   
-        // }else{
-        //     var params = {
-        //         user_id:value.user_id,
-        //         name_id:state.detailData._id
-        //     }
-        //     ifLikedApi(params).then(res=>{
-        //         if(res.err_code == 200) isLiked.value = res.data.isLiked
-        //     })
-        // }
+        if(!value){
+            isLiked.value = false   
+        }else{
+            var params = {
+                user_id:value.user_id,
+                name_id:state.detailData._id
+            }
+            ifLikedApi(params).then(res=>{
+                if(res.err_code == 200) isLiked.value = res.data.isLiked
+            })
+        }
     })
 
 </script>
@@ -295,7 +296,4 @@
         .detail-comment()
     }
 }
-// .el-icon-star-on{
-//     color:red;
-// }
 </style>

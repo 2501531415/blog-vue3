@@ -1,5 +1,5 @@
 import {ElButton,ElContainer,ElAside,ElMain,ElHeader,ElFooter,ElIcon,ElMenu,ElMenuItem,ElSubmenu,ElScrollbar,ElRow,ElCol,ElTag,ElMessage,ElLoading,ElBacktop,ElInput,
-    ElDialog,ElForm,ElFormItem,ElEmpty,ElDropdown,ElDropdownMenu,ElDropdownItem} from 'element-plus'
+    ElDialog,ElForm,ElFormItem,ElEmpty,ElDropdown,ElDropdownMenu,ElDropdownItem,ElPagination} from 'element-plus'
 
 const components = [
     ElButton,
@@ -25,6 +25,7 @@ const components = [
     ElDropdown,
     ElDropdownMenu,
     ElDropdownItem,
+    ElPagination
 ]
 const plugins = [
     ElLoading,
