@@ -1,9 +1,9 @@
 <template>
     <div class="detail">
         <m-title></m-title>
-        <div class="detail-sart" :style="{'left':sideStatus?left:'20%'}" v-if="state.detailData">
+        <div class="detail-sart" :style="{'left':sideStatus?left:'20%'}" v-if="state.detailData && state.commentData">
             <m-button icon="el-icon-star-off" :badge="state.detailData.meta.likes" @click="starClick" v-if="!isLiked"></m-button>
-             <m-button icon="el-icon-star-on" :badge="state.detailData.meta.likes"  v-else></m-button>
+            <m-button icon="el-icon-star-on" :badge="state.detailData.meta.likes"  v-else></m-button>
             <m-button icon="el-icon-message" :badge="state.detailData.meta.comments" @click="commentIconClick"></m-button>
             <m-button icon="el-icon-view" :badge="state.detailData.meta.views"></m-button>
         </div>
@@ -20,7 +20,7 @@
                             <span>{{state.detailData.meta.views}}</span>
                         </div>
                         <div>
-                             <i class="el-icon-star-on"></i>
+                             <i class="el-icon-star-off"></i>
                             <span>{{state.detailData.meta.likes}}</span>
                         </div>
                         <div>
@@ -75,11 +75,11 @@
 </template>
 
 <script setup>
-    import {reactive,ref,computed, onMounted, inject} from 'vue'
+    import {reactive,ref,computed, onMounted, inject, watch} from 'vue'
     import {useRoute} from 'vue-router'
     import {useStore} from 'vuex'
     import marked from 'marked'
-    import {getArticleDetail,getLearnDetail,postLike} from '@/network/article.js'
+    import {getArticleDetail,getLearnDetail,postLike,ifLikedApi} from '@/network/article.js'
     import {getComment,postComment,secondComment} from '@/network/comment.js'
     import {utcFormat} from '@/utils/time.js'
     import {ElMessage} from 'element-plus'
@@ -189,6 +189,22 @@
             })
         }   
     }
+
+    //watch userInfo change
+    watch(userInfo,(value,old)=>{
+        // if(!value){
+        //     isLiked.value = false   
+        // }else{
+        //     var params = {
+        //         user_id:value.user_id,
+        //         name_id:state.detailData._id
+        //     }
+        //     ifLikedApi(params).then(res=>{
+        //         if(res.err_code == 200) isLiked.value = res.data.isLiked
+        //     })
+        // }
+    })
+
 </script>
 
 <style lang="less">
@@ -279,7 +295,7 @@
         .detail-comment()
     }
 }
-.el-icon-star-on{
-    color:red;
-}
+// .el-icon-star-on{
+//     color:red;
+// }
 </style>

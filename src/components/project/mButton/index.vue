@@ -53,6 +53,7 @@
             border-radius: 10px;
             padding:2px;
             font-size: 12px;
+            user-select: none;
         }
     }
 </style>

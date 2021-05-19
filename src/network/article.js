@@ -54,3 +54,13 @@ export function postLike(type,data){
         data
     })
 }
+
+//获取点赞状态 
+
+export function ifLikedApi(params){
+    return request({
+        url:'/comments/liked',
+        method:'get',
+        params
+    })
+}
