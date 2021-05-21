@@ -9,6 +9,16 @@
             </template>
         </m-title>
         <m-acticle :acticle="state.articleData" @readAll="readAll"></m-acticle>
+        <el-row>
+             <el-col :span="12" :offset="6">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :current-page="pages.page"
+                    :total="total" @prev-click="prevClick" @next-click="nextClick" @current-change="currentChange">
+                </el-pagination>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -24,20 +34,40 @@
     const router = useRouter()
     const store = useStore()
     const title = ref(null)
+    const pages = reactive({
+        page:1,
+        limit:10
+    })
+    const total = ref(null)
     const scrollTop = inject('scrollTop')
     const showTitle = inject('showTitle')
 
     const state = reactive({
         articleData:null
     })
-    getArticle().then(res=>{
-        console.log(res)
-        if(res.err_code != 200) return ElMessage.error('服务器异常！')
-        state.articleData = res.data
-    })
+    const getArticleList = ()=>{
+        getArticle(pages).then(res=>{
+            console.log(res)
+            if(res.err_code != 200) return ElMessage.error('服务器异常！')
+            state.articleData = res.data
+            total.value = res.other.total
+        })
+    }
+    getArticleList()
 
     const readAll = (id)=>{
         router.push({path:`/detail/article`,query:{'id':id}})
+    }
+    const prevClick = (e)=>{
+        pages.page = e
+         getArticleList()
+    }
+    const nextClick = (e)=>{
+        pages.page = e
+        getArticleList()
+    }
+    const currentChange = (e)=>{
+        getArticleList()
     }
 
     watch(scrollTop,(value,old)=>{

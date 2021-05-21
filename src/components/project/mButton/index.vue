@@ -1,6 +1,6 @@
 <template>
     <div class="m-button">
-        <i :class="icon"></i>
+        <i :class="icon" :style="{'color':color}"></i>
         <div class="m-button-badge" v-if="badge">
             <span>{{badge}}</span>
         </div>
@@ -16,6 +16,10 @@
         },
         badge:{
             type:Number
+        },
+        color:{
+            type:String,
+            default:'#b2bac2'
         }
     })
 </script>

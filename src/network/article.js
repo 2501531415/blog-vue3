@@ -1,9 +1,10 @@
 import {request} from './http'
 
-export function getArticle(){
+export function getArticle(params){
     return request({
         url:'/article',
-        method:'get'
+        method:'get',
+        params
     })
 }
 
