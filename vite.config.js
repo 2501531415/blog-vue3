@@ -28,5 +28,14 @@ export default defineConfig({
     alias:{
       '@':path.resolve(__dirname,'src')
     }
+  },
+  build:{
+    //移除console debugger
+    terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+    }
   }
 })

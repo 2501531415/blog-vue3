@@ -54,13 +54,5 @@
 </script>
 
 <style lang="less" scoped>
-    .el-menu-item{
-        border:none!important;
-        i{
-            color:#fff;
-        }
-    }
-    .el-menu-item.is-active i{
-        color: inherit;
-    }
+    
 </style>

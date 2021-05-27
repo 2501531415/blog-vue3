@@ -5,7 +5,15 @@
             <i :class="[sideStatus?'el-icon-s-fold':'el-icon-s-unfold']" @click="collapse"></i>
         </div>
         <div class="header-right">
-            <Menu :menu="menu" mode="horizontal" :router="true" :default-active="active" background-color="#3f51b5" text-color="#fff"></Menu>
+            <el-autocomplete
+                v-model="searchValue"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入文章标题"
+                clearable
+                prefix-icon="el-icon-search"
+                @select="searchSelect"
+                >
+            </el-autocomplete>
             <div class="header-right-user">
                 <el-button v-if="!userInfo" type="primary" @click="login" plain>去登录</el-button>
                 <el-dropdown v-else>
@@ -26,20 +34,16 @@
 </template>
 
 <script setup>
-    import {watchEffect,computed, onMounted} from 'vue'
+    import {computed,ref} from 'vue'
     import {useStore} from 'vuex'
-    import {useRoute} from 'vue-router'
-    import Menu from '@/components/element/menu/index.vue'
+    import {useRouter} from 'vue-router'
     import MAvatar from '@/components/common/mAvatar/index.vue'
     import {baseUrl} from '@/config/config.js'
     import cookie from '@/lib/cookie.js'
+    import {search} from '@/network/article.js'
     const store = useStore()
-    const route = useRoute()
-    const menu = [{'title':'首页','path':'/home','icon':'s-home'},
-    {'title':'分类','path':'/category','icon':'collection-tag'},
-    {'title':'归档','path':'/file','icon':'files'},
-    ]
-    const active = route.fullPath
+    const router = useRouter()
+    const searchValue = ref(null)
     const headerTitle = computed(()=>store.state.headerTitle)
 
     const width = computed(()=>{
@@ -54,6 +58,32 @@
     const collapse = ()=>{
         store.commit('changeSideStatus',!sideStatus.value)
     }
+
+    //search
+    let timeout = ref(null)
+    const querySearchAsync = (value,callback)=>{
+        if(value && value.length > 0){
+            search({searchString:value}).then(res=>{
+                if(res.err_code == 200 && res.data.length >0){
+                    var arr = []
+                    res.data.forEach(item=>{
+                        arr.push({value:item.title,id:item._id})
+                    })
+                    callback(arr)
+                }else{
+                    clearTimeout(timeout.value)
+                    timeout.value = setTimeout(()=>{
+                        callback([])
+                    },1500)
+                }
+            })
+        }
+    }
+    //saerch select
+    const searchSelect = (item)=>{
+        router.push({path:`/detail/article`,query:{'id':item.id}})
+        searchValue.value = null
+    }
     //点击登录
     const login = ()=>{
         store.commit('changeLoginDialog',true)
@@ -63,9 +93,6 @@
         store.commit('changeUserInfo',null)
         cookie.remove('userInfo')
     }
-    onMounted(()=>{
-        console.log(window.screen.availWidth)
-    })
 </script>
 
 <style lang="less" scoped>
@@ -78,6 +105,9 @@
         &-right{
             display: flex;
             align-items:center;
+            &-user{
+                margin-left: 10px;
+            }
         }
         &-title{
             position: absolute;

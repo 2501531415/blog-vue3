@@ -19,11 +19,11 @@
                             <i class="el-icon-view"></i>
                             <span>{{state.detailData.meta.views}}</span>
                         </div>
-                        <div>
+                        <div v-if="type">
                              <i class="el-icon-star-off"></i>
                             <span>{{state.detailData.meta.likes}}</span>
                         </div>
-                        <div>
+                        <div v-if="type">
                             <i class="el-icon-document"></i>
                             <span>{{state.detailData.meta.comments}}</span>
                         </div>
@@ -56,7 +56,7 @@
                          <tag-group :tagData="state.detailData.keyWord?state.detailData.keyWord:state.detailData.type"></tag-group>
                     </div>
                 </div>
-                <div class="detail-comment" v-if="state.commentData" ref="commentRef">
+                <div class="detail-comment" v-if="type" ref="commentRef">
                     <m-comment @submit="submit" ref="comment"></m-comment>
                     <div class="detail-comment-tip">
                         <span>Code1:Don't post illegal comments</span>
@@ -79,7 +79,7 @@
     import {useRoute} from 'vue-router'
     import {useStore} from 'vuex'
     import marked from 'marked'
-    import {getArticleDetail,getLearnDetail,postLike,ifLikedApi} from '@/network/article.js'
+    import {getArticleDetail,getLearnDetail,postLike,ifLikedApi,views} from '@/network/article.js'
     import {getComment,postComment,secondComment} from '@/network/comment.js'
     import {utcFormat} from '@/utils/time.js'
     import {ElMessage} from 'element-plus'
@@ -109,6 +109,20 @@
     const left = computed(()=>`calc(0.2*(100vw - 300px) + 300px)`)
 
     const userInfo = computed(()=>store.state.userInfo)
+
+    const type = computed(()=>{
+        if(route.params.type == 'article'){
+            return true
+        }else{
+            return false
+        }
+    })
+
+    //views
+    const viewed = (type,id)=>{
+        views(type,{name_id:id})
+    }
+
     //获取评论列表
     const getCommentList = ()=>{
         getComment(route.query.id).then(res=>{
@@ -119,18 +133,18 @@
     if(route.params.type == 'article'){
         const id = userInfo.value?userInfo.value.user_id:null
         getArticleDetail(route.query.id,id).then(res=>{
-            console.log(res.data)
             res.data.content = marked(res.data.content)
             state.detailData = res.data
             isLiked.value = res.other?res.other.isLiked:null
         })
         getCommentList()
+        viewed('article',route.query.id)
     }else{
         getLearnDetail(route.query.id).then(res=>{
-            console.log(res)
             res.detail.content = marked(res.detail.content)
             state.detailData = res.detail
         })
+        viewed('learnItem',route.query.id)
     }
     
     //评论点击事件

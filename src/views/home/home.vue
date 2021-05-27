@@ -9,7 +9,7 @@
             </template>
         </m-title>
         <m-acticle :acticle="state.articleData" @readAll="readAll"></m-acticle>
-        <el-row>
+        <el-row class="home-pagination">
              <el-col :span="12" :offset="6">
                 <el-pagination
                     background
@@ -84,5 +84,7 @@
 </script>
 
 <style lang="less" scoped>
-    
+    .home-pagination{
+        margin: 20px 0px;
+    }
 </style>

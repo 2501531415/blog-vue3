@@ -60,8 +60,27 @@ export function postLike(type,data){
 
 export function ifLikedApi(params){
     return request({
-        url:'/comments/liked',
+        url:'comments/liked',
         method:'get',
         params
+    })
+}
+
+//search
+
+export function search(data){
+    return request({
+        url:'article/search',
+        method:'post',
+        data
+    })
+}
+
+//views
+export function views(type,data){
+    return request({
+        url:`learn/views/${type}`,
+        method:'post',
+        data
     })
 }

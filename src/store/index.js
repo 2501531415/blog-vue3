@@ -7,7 +7,7 @@ import cookie from '@/lib/cookie.js'
 const store = createStore({
     state(){
         return {
-            sideStatus:false,
+            sideStatus:true,
             loginDialog:false,
             userInfo:cookie.get('userInfo')?JSON.parse(cookie.get('userInfo')):null,
             headerTitle:null,

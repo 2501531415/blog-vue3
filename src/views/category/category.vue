@@ -44,7 +44,6 @@
         categoryData:null
     })
     getLearnNav().then(res=>{
-        console.log(res)
         state.categoryData = res.data
     })
     getLearnAll().then(res=>{
