@@ -4,8 +4,7 @@ import {ElMessage} from 'element-plus'
 
 export function request(config){
     const instance = axios.create({
-        //baseURL:'http://192.168.47.1:3001/api/v1',
-       baseURL:'http://blog.wmyy.fun/api/v1',
+       baseURL:import.meta.env.PROD?'http://blog.wmyy.fun/api/v1':'http://192.168.47.1:3001/api/v1',
        timeout:5000   
     })
     //interceptor request
