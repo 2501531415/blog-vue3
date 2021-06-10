@@ -24,8 +24,6 @@ router.beforeEach((to,form,next)=>{
     nprogress.start()
     if(to.meta.name){
         document.title = to.meta.name
-    }else{
-        document.title = 'my-blog'
     }
     next()
 })

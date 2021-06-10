@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite'
-import styleImport from 'vite-plugin-style-import'
-import vue from '@vitejs/plugin-vue'
 const path = require('path')
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import styleImport from 'vite-plugin-style-import'
+import html from 'vite-plugin-html'
+
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,6 +24,13 @@ export default defineConfig({
           },
         }
       ]
+    }),
+    html({
+      inject:{
+        injectData:{
+          title:'this is my blog'
+        }
+      },
     })
   ],
   resolve:{
