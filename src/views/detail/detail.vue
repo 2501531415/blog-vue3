@@ -57,7 +57,13 @@
                     </div>
                 </div>
                 <div class="detail-comment" v-if="type" ref="commentRef">
-                    <m-comment @submit="submit" ref="comment"></m-comment>
+                    <m-comment @submit="submit" ref="comment">
+                        <template #userInfo>
+                            <m-avatar :url="baseUrl + userInfo.avatar" width="40" v-if="userInfo"></m-avatar>
+                            <m-avatar :url="avatar" width="40" v-else></m-avatar>
+                            <span>当前用户:<span :class="[userInfo?'detail-comment-username':'detail-comment-unusername']">{{commentUsername}}</span></span>
+                        </template>
+                    </m-comment>
                     <div class="detail-comment-tip">
                         <span>Code1:Don't post illegal comments</span>
                     </div>
@@ -82,12 +88,15 @@
     import {getArticleDetail,getLearnDetail,postLike,ifLikedApi,views} from '@/network/article.js'
     import {getComment,postComment,secondComment} from '@/network/comment.js'
     import {utcFormat} from '@/utils/time.js'
+    import {baseUrl} from '@/config/config'
     import {ElMessage} from 'element-plus'
     import TagGroup from '@/components/element/tagGroup/index.vue'
     import MTitle from '@/components/common/mTitle/index.vue'
     import MComment from '@/components/project/mComment/index.vue'
     import MCommentList from '@/components/project/mCommentList/index.vue'
     import MButton from '@/components/project/mButton/index.vue'
+    import MAvatar from '@/components/common/mAvatar/index.vue'
+    import avatar from '@/assets/img/avatar.jpg'
     const route = useRoute()
     const store = useStore()
     const state = reactive({
@@ -118,6 +127,7 @@
         }
     })
 
+    const commentUsername = computed(()=>userInfo.value?userInfo.value.username:'未登录')
     //views
     const viewed = (type,id)=>{
         views(type,{name_id:id})
@@ -304,6 +314,12 @@
             justify-content: flex-end;
             font-size: 14px;
             color: gray;
+        }
+        &-username{
+            color:#3f51b5;
+        }
+        &-unusername{
+            color:red;
         }
     }
     .detail-comment-list{

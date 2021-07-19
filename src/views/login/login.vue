@@ -103,8 +103,8 @@
     }
     const state = reactive({
         user:{
-            username:'admin',
-            password:'123456'
+            username:'',
+            password:''
         },
         register:{
             username:null,

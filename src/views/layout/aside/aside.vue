@@ -42,6 +42,7 @@
     const menu = [{'title':'首页','path':'/home','icon':'s-home'},
     {'title':'分类','path':'/category','icon':'collection-tag'},
     {'title':'归档','path':'/file','icon':'files'},
+    {'title':'留言','path':'/message','icon':'message'}
     ]
 
     introduce().then(res=>{
