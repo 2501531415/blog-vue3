@@ -6,7 +6,7 @@
             <slot name="userInfo"></slot>
         </div>
         <div class="m-conment-text">
-            <el-input maxlength="5" class="m-textarea" v-model="commentData" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="要不要说点什么?"></el-input>
+            <el-input :maxlength="maxlength" class="m-textarea" v-model="commentData" type="textarea" :autosize="{ minRows: 5, maxRows: 10}" placeholder="要不要说点什么?"></el-input>
         </div>
         <div class="m-comment-submit">
             <el-button size="small" :disabled="!inputValue" @click="submit">提交</el-button>
@@ -17,8 +17,13 @@
 <script setup>
     //import {defineProps,defineEmit} from 'vue'
     // import MAvatar from '@/components/common/mAvatar/index.vue'
-    import {ref,defineEmit,useContext,computed} from 'vue'
-
+    import {ref,defineEmit,defineProps,useContext,computed} from 'vue'
+    const props = defineProps({
+        maxlength:{
+            type:String,
+            deafult:150
+        }
+    })
     const context = useContext()
 
     const commentData = ref('')

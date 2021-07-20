@@ -1,6 +1,14 @@
 <template>
     <div class="m-message">
-        <el-row >
+        <m-title bgc="#fdf6ec">
+            <template #title>
+                <span class="m-message-title">留言板</span>
+            </template>
+            <template #subTitle>
+                <span class="m-message-title">目前留言板仅支持留言,其他功能等待开放...</span>
+            </template>
+        </m-title>
+        <el-row class="m-message-content">
             <el-col :span="18" :offset="3">
                 <el-card>
                     <MMessage :MessageList="message.messageList" class="m-message-list"/>
@@ -20,7 +28,6 @@
                             <span>当前用户:<span :class="[userInfo?'m-message-comment-username':'m-message-comment-unusername']">{{commentUsername}}</span></span>
                         </template>
                     </m-comment>
-                   
                 </el-card>
             </el-col>
         </el-row>
@@ -30,12 +37,14 @@
 <script setup>
     import {reactive,computed,ref} from 'vue'
     import {useStore} from 'vuex'
-    import {getMessage} from '@/network/message'
+    import {getMessageApi,addMessageApi} from '@/network/message'
     import {baseUrl} from '@/config/config'
     import MMessage from '@/components/project/mMessage/index.vue'
     import MComment from '@/components/project/mComment/index.vue'
     import MAvatar from '@/components/common/mAvatar/index.vue'
+    import MTitle from '@/components/common/mTitle/index.vue'
     import avatar from '@/assets/img/avatar.jpg'
+    import {success,error} from '@/components/element/notice/message'
 
     const store = useStore()
     const message = reactive({
@@ -44,6 +53,8 @@
 
     const total = ref(7)
     const page = ref(1)
+    
+    const comment = ref(null)
 
     const userInfo = computed(()=>store.state.userInfo)
 
@@ -57,13 +68,33 @@
 
     const commentUsername = computed(()=>userInfo.value?userInfo.value.username:'未登录')
 
-    getMessage().then(res=>{
-        console.log(res)
-        message.messageList = res.data
-    })
+    const getMessage = ()=>{
+        getMessageApi().then(res=>{
+            console.log(res)
+            message.messageList = res.data.map(item=>{
+                item.avatar = baseUrl + item.avatar
+                return item
+            })
+        })
+    }
+    getMessage()
 
-    const submit = ()=>{
-
+    const submit = (value)=>{
+        if(!userInfo.value){
+            return store.commit('changeLoginDialog',true)
+        }else{
+            const submibData = {
+                avatar: userInfo.value.avatar,
+                content: value,
+                username: userInfo.value.username,
+            }
+            addMessageApi(submibData).then(res=>{
+                if(res.err_code !=200) return error('留言失败')
+                getMessage()
+                success('留言成功')
+                comment.value.clearInput()
+            })
+        }
     }
     
     const prevClick = ()=>{
@@ -80,7 +111,12 @@
 
 <style lang="less">
     .m-message{
-        padding-top: 10px;
+        &-title{
+            color: rgb(20, 20, 20);
+        }
+        &-content{
+            padding: 10px 0px;
+        }
         &-comment-username{
             color:#3f51b5;
         }

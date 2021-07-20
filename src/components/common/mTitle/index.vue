@@ -1,5 +1,5 @@
 <template>
-    <div class="m-title">
+    <div class="m-title" :style="{'backgroundColor':bgc}">
         <el-row class="m-title-content">
             <el-col :span="16" :offset="4">
                 <div class="m-title-text">
@@ -18,9 +18,19 @@
     </div>
 </template>
 
+<script setup>
+    import {defineProps} from 'vue'
+    
+    const props = defineProps({
+        bgc:{
+            type:String,
+            default:'#3f51b5'
+        }
+    })
+</script>
+
 <style lang="less" scoped>
 .m-title{
-    background-color:#3f51b5;
     min-height:160px;
     color:#fff;
     position: relative;
