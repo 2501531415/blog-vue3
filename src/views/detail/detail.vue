@@ -140,7 +140,8 @@
         })
     }
 
-    if(route.params.type == 'article'){
+    const initDetail = ()=>{
+        if(route.params.type == 'article'){
         const id = userInfo.value?userInfo.value.user_id:null
         getArticleDetail(route.query.id,id).then(res=>{
             res.data.content = marked(res.data.content)
@@ -156,7 +157,9 @@
         })
         viewed('learnItem',route.query.id)
     }
+    }
     
+    initDetail()
     //评论点击事件
     const submit = (commentValue)=>{
         if(!userInfo.value){
@@ -230,6 +233,12 @@
         }
     })
 
+    watch(route,(value,old)=>{
+        if(value.query.id){
+            initDetail()
+            scrollTo(0)
+        }
+    })
 </script>
 
 <style lang="less">

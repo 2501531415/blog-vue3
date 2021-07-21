@@ -15,7 +15,7 @@
                 >
             </el-autocomplete>
             <div class="header-right-user">
-                <el-button v-if="!userInfo" type="primary" @click="login" plain>去登录</el-button>
+                <el-button v-if="!userInfo" type="primary" @click="login" plain>去登录呀</el-button>
                 <el-dropdown v-else>
                     <div class="el-dropdown-link">
                         <m-avatar :url="baseUrl+userInfo.avatar" width="30"></m-avatar>

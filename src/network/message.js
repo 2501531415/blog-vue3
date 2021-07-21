@@ -1,9 +1,10 @@
 import {request} from './http.js'
 
-export function getMessageApi(){
+export function getMessageApi(query){
     return request({
         url:`message`,
-        method:'get'
+        method:'get',
+        params:query
     })
 }
 

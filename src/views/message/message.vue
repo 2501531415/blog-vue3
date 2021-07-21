@@ -16,9 +16,9 @@
                         <el-pagination
                             background
                             layout="prev, pager, next"
-                            :current-page="page"
-                            :hide-on-single-page="true"
-                            :total="total" @prev-click="prevClick" @next-click="nextClick" @current-change="currentChange">
+                            :page-size="pagination.limit"
+                            :current-page="pagination.page"
+                            :total="total" @prev-click="paginationChange" @next-click="paginationChange" @current-change="paginationChange">
                         </el-pagination>
                     </div>
                     <m-comment @submit="submit" ref="comment">
@@ -50,11 +50,14 @@
     const message = reactive({
         messageList:[]
     })
-
-    const total = ref(7)
-    const page = ref(1)
     
     const comment = ref(null)
+    const total = ref(0)
+    
+    const pagination = reactive({
+        page:1,
+        limit:10
+    })
 
     const userInfo = computed(()=>store.state.userInfo)
 
@@ -68,9 +71,10 @@
 
     const commentUsername = computed(()=>userInfo.value?userInfo.value.username:'未登录')
 
+    //获取留言
     const getMessage = ()=>{
-        getMessageApi().then(res=>{
-            console.log(res)
+        getMessageApi(pagination).then(res=>{
+            total.value = res.total
             message.messageList = res.data.map(item=>{
                 item.avatar = baseUrl + item.avatar
                 return item
@@ -79,6 +83,7 @@
     }
     getMessage()
 
+    //留言提交
     const submit = (value)=>{
         if(!userInfo.value){
             return store.commit('changeLoginDialog',true)
@@ -97,15 +102,10 @@
         }
     }
     
-    const prevClick = ()=>{
-
-    }
-
-    const nextClick = ()=>{
-
-    }
-    const currentChange = ()=>{
-        
+    //分页改变
+    const paginationChange = (page)=>{
+        pagination.page = page
+        getMessage()
     }
 </script>
 
